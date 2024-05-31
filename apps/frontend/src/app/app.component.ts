@@ -1,14 +1,23 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { PlatformService } from './core/services/platform.service';
+import { initFlowbite } from 'flowbite';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [MainLayoutComponent],
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  template: ` <app-main-layout />`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  title = 'frontend';
+export class AppComponent implements OnInit {
+  private platformService = inject(PlatformService);
+
+  constructor() {}
+
+  ngOnInit(): void {
+    if (this.platformService.isBrowser()) {
+      initFlowbite();
+    }
+  }
 }
