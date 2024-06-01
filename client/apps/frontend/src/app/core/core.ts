@@ -16,7 +16,7 @@ export interface CoreOptions {
 
 export function provideCore(coreOptions: CoreOptions): EnvironmentProviders[] {
   return [
-    //provideExperimentalZonelessChangeDetection(),
+    provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withFetch()),
     provideClientHydration(),
     provideAnimationsAsync(),

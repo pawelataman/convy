@@ -2,7 +2,11 @@
   "name": "@convy-app/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve:backend": "npx nx run backend:serve",
+    "serve:frontend": "npx nx run frontend:serve",
+    "serve:all": "npx nx run-many --target=serve"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~18.0.0",
@@ -24,8 +28,7 @@
     "flowbite": "^2.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~18.0.0",
@@ -59,7 +62,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.3.0",
     "@typescript-eslint/parser": "^7.3.0",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.0",
     "eslint": "~8.57.0",
     "eslint-config-prettier": "^9.0.0",
     "jest": "^29.4.1",
@@ -67,7 +70,7 @@
     "jest-environment-node": "^29.4.1",
     "jest-preset-angular": "~14.1.0",
     "nx": "19.1.1",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.5",
     "prettier": "^2.6.2",
     "prettier-plugin-organize-imports": "^3.2.4",
     "tailwindcss": "^3.4.3",

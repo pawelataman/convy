@@ -1,0 +1,8 @@
+client/node_modules
+client/.nx
+client/.angular
+client/.vscode
+client/dist
+
+.gitignore
+.dockerignore
