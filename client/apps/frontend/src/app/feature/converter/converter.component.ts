@@ -48,7 +48,7 @@ export class ConverterComponent implements OnInit {
 
   ngOnInit(): void {
     this._constructAcceptedFormatString();
-    this._fetchImagesFromAssets();
+    // this._fetchImagesFromAssets();
   }
 
   private _constructAcceptedFormatString(): void {

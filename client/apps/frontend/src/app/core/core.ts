@@ -1,10 +1,10 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { EnvironmentProviders, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { EnvironmentProviders } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
-  provideRouter,
   Routes,
+  provideRouter,
   withComponentInputBinding,
   withEnabledBlockingInitialNavigation,
   withRouterConfig,
@@ -16,7 +16,7 @@ export interface CoreOptions {
 
 export function provideCore(coreOptions: CoreOptions): EnvironmentProviders[] {
   return [
-    provideExperimentalZonelessChangeDetection(),
+    // provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withFetch()),
     provideClientHydration(),
     provideAnimationsAsync(),

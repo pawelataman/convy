@@ -23,6 +23,7 @@
         ],
         "styles": ["apps/frontend/src/styles.scss"],
         "scripts": [],
+        "polyfills": ["zone.js"],
         "server": "apps/frontend/src/main.server.ts",
         "prerender": true,
         "ssr": {
