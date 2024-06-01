@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@global/*": ["libs/shared/src/lib/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

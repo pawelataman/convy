@@ -1,13 +1,24 @@
 import { Injectable } from '@angular/core';
-import { FileFormat } from '../types/file-formats';
+import { AppConfig } from '../types/app-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  constructor() {}
+  private _appConfig: AppConfig = {
+    sourceFormats: [],
+    targetFormats: [],
+  };
 
-  get availableFormats(): FileFormat[] {
-    return ['jpeg', 'png'];
+  set appConfig(appConfig: AppConfig) {
+    this._appConfig = appConfig;
+  }
+
+  get supportedSourceFileFormats(): string[] {
+    return this._appConfig.sourceFormats;
+  }
+
+  get supportedTargetFileFormats(): string[] {
+    return this._appConfig.targetFormats;
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { ConfigService } from '../../core/services/config.service';
 import { FileService } from '../../core/services/file.service';
 import { PlatformService } from '../../core/services/platform.service';
@@ -8,7 +9,6 @@ import { extractFileFormat } from '../../core/utils/file';
 import { generateUUid } from '../../core/utils/uuid';
 import { ConvertableFile } from './converter.types';
 import { FileListComponent } from './file-list/file-list.component';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-converter',
@@ -52,7 +52,7 @@ export class ConverterComponent implements OnInit {
   }
 
   private _constructAcceptedFormatString(): void {
-    const acceptedFormats = this._configService.availableFormats;
+    const acceptedFormats = this._configService.supportedSourceFileFormats;
 
     const acceptedFormatsStr = acceptedFormats.map((format) => `image/${format}`).join(',');
     this.acceptedFormats.set(acceptedFormatsStr);
