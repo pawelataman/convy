@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { ConvertableFile } from '../converter.types';
 import { FileListItemComponent } from '../file-list-item/file-list-item.component';
+import { FileTileItemComponent } from '../file-tile-item/file-tile-item.component';
+import { ConvertToSelectComponent } from '../convert-to-select/convert-to-select.component';
 
 @Component({
   selector: 'app-file-list',
   standalone: true,
-  imports: [CommonModule, FileListItemComponent],
+  imports: [CommonModule, FileTileItemComponent, FileListItemComponent, ConvertToSelectComponent],
   templateUrl: './file-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
