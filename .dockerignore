@@ -4,5 +4,6 @@ client/.angular
 client/.vscode
 client/dist
 
-.gitignore
 .dockerignore
+.gitignore
+.idea
