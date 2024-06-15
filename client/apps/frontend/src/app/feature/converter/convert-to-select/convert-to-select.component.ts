@@ -11,8 +11,9 @@ import { ConfigService } from '../../../core/services/config.service';
   styles: ``,
 })
 export class ConvertToSelectComponent {
-  targetFormat = model(null);
   @Input() placeholder = 'Convert to';
+
+  targetFormat = model(null);
   private _configService = inject(ConfigService);
   formatOptions = signal(this._configService.supportedTargetFileFormats);
 }

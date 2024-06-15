@@ -7,12 +7,14 @@ import { FileService } from '../../core/services/file.service';
 import { PlatformService } from '../../core/services/platform.service';
 import { extractFileFormat } from '../../core/utils/file';
 import { generateUUid } from '../../core/utils/uuid';
+import { ConverterService } from './converter.service';
 import { ConvertableFile } from './converter.types';
 import { FileListComponent } from './file-list/file-list.component';
 
 @Component({
   selector: 'app-converter',
   standalone: true,
+  providers: [ConverterService],
   imports: [CommonModule, FormsModule, FileListComponent],
   templateUrl: './converter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,7 +26,8 @@ export class ConverterComponent implements OnInit {
   constructor(
     private readonly _configService: ConfigService,
     private readonly _fileService: FileService,
-    private readonly _platformService: PlatformService
+    private readonly _platformService: PlatformService,
+    private readonly _converterService: ConverterService
   ) {
     //  effect(() => console.log(this.convertableFiles()));
   }
@@ -34,10 +37,7 @@ export class ConverterComponent implements OnInit {
     const files: FileList | null = input.files;
 
     if (files) {
-      this.convertableFiles.set([
-        ...this.convertableFiles(),
-        ...Array.from(files).map(this._createNewConvertableFile.bind(this)),
-      ]);
+      this.convertableFiles.set([...this.convertableFiles(), ...Array.from(files).map(this._createNewConvertableFile.bind(this))]);
     }
   }
 

@@ -20,16 +20,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type HelloRequest struct {
+type FileUploadRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	FileName string `protobuf:"bytes,1,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	Chunk    []byte `protobuf:"bytes,2,opt,name=chunk,proto3" json:"chunk,omitempty"`
 }
 
-func (x *HelloRequest) Reset() {
-	*x = HelloRequest{}
+func (x *FileUploadRequest) Reset() {
+	*x = FileUploadRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_converter_messages_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -37,13 +38,13 @@ func (x *HelloRequest) Reset() {
 	}
 }
 
-func (x *HelloRequest) String() string {
+func (x *FileUploadRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloRequest) ProtoMessage() {}
+func (*FileUploadRequest) ProtoMessage() {}
 
-func (x *HelloRequest) ProtoReflect() protoreflect.Message {
+func (x *FileUploadRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_converter_messages_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,28 +56,36 @@ func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
-func (*HelloRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FileUploadRequest.ProtoReflect.Descriptor instead.
+func (*FileUploadRequest) Descriptor() ([]byte, []int) {
 	return file_converter_messages_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *HelloRequest) GetName() string {
+func (x *FileUploadRequest) GetFileName() string {
 	if x != nil {
-		return x.Name
+		return x.FileName
 	}
 	return ""
 }
 
-type HelloReply struct {
+func (x *FileUploadRequest) GetChunk() []byte {
+	if x != nil {
+		return x.Chunk
+	}
+	return nil
+}
+
+type FileUploadResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Message string `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	FileName string `protobuf:"bytes,1,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	Size     uint32 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
 }
 
-func (x *HelloReply) Reset() {
-	*x = HelloReply{}
+func (x *FileUploadResponse) Reset() {
+	*x = FileUploadResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_converter_messages_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -84,13 +93,13 @@ func (x *HelloReply) Reset() {
 	}
 }
 
-func (x *HelloReply) String() string {
+func (x *FileUploadResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HelloReply) ProtoMessage() {}
+func (*FileUploadResponse) ProtoMessage() {}
 
-func (x *HelloReply) ProtoReflect() protoreflect.Message {
+func (x *FileUploadResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_converter_messages_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -102,16 +111,23 @@ func (x *HelloReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HelloReply.ProtoReflect.Descriptor instead.
-func (*HelloReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use FileUploadResponse.ProtoReflect.Descriptor instead.
+func (*FileUploadResponse) Descriptor() ([]byte, []int) {
 	return file_converter_messages_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *HelloReply) GetMessage() string {
+func (x *FileUploadResponse) GetFileName() string {
 	if x != nil {
-		return x.Message
+		return x.FileName
 	}
 	return ""
+}
+
+func (x *FileUploadResponse) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
 }
 
 var File_converter_messages_proto protoreflect.FileDescriptor
@@ -119,13 +135,17 @@ var File_converter_messages_proto protoreflect.FileDescriptor
 var file_converter_messages_proto_rawDesc = []byte{
 	0x0a, 0x18, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x65, 0x72, 0x5f, 0x6d, 0x65, 0x73, 0x73,
 	0x61, 0x67, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x63, 0x6f, 0x6e, 0x76,
-	0x65, 0x72, 0x74, 0x65, 0x72, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x26, 0x0a, 0x0a, 0x48, 0x65, 0x6c,
-	0x6c, 0x6f, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
-	0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
-	0x65, 0x42, 0x0e, 0x5a, 0x0c, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x65, 0x72, 0x2f, 0x70,
-	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x72, 0x74, 0x65, 0x72, 0x22, 0x46, 0x0a, 0x11, 0x46, 0x69, 0x6c, 0x65, 0x55, 0x70, 0x6c,
+	0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x69,
+	0x6c, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66,
+	0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b, 0x22, 0x45, 0x0a,
+	0x12, 0x46, 0x69, 0x6c, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04,
+	0x73, 0x69, 0x7a, 0x65, 0x42, 0x0e, 0x5a, 0x0c, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x65,
+	0x72, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -142,8 +162,8 @@ func file_converter_messages_proto_rawDescGZIP() []byte {
 
 var file_converter_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_converter_messages_proto_goTypes = []any{
-	(*HelloRequest)(nil), // 0: converter.HelloRequest
-	(*HelloReply)(nil),   // 1: converter.HelloReply
+	(*FileUploadRequest)(nil),  // 0: converter.FileUploadRequest
+	(*FileUploadResponse)(nil), // 1: converter.FileUploadResponse
 }
 var file_converter_messages_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -160,7 +180,7 @@ func file_converter_messages_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_converter_messages_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*HelloRequest); i {
+			switch v := v.(*FileUploadRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -172,7 +192,7 @@ func file_converter_messages_proto_init() {
 			}
 		}
 		file_converter_messages_proto_msgTypes[1].Exporter = func(v any, i int) any {
-			switch v := v.(*HelloReply); i {
+			switch v := v.(*FileUploadResponse); i {
 			case 0:
 				return &v.state
 			case 1:

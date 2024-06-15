@@ -32,7 +32,7 @@
         <input (change)="onFileChange($event)" [accept]="acceptedFormats()" class="hidden" id="dropzone-file" multiple type="file" />
       </label>
     </div>
-
+    
     <div class="mt-8">
       <app-file-list (removeItem)="onRemoveItem($event)" [files]="convertableFiles()" />
     </div>

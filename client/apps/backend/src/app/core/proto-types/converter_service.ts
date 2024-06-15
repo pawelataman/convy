@@ -7,28 +7,30 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { HelloReply, HelloRequest } from "./converter_messages";
+import { FileUploadRequest, FileUploadResponse } from "./converter_messages";
 
 export const protobufPackage = "converter";
 
 export const CONVERTER_PACKAGE_NAME = "converter";
 
 export interface ConverterServiceClient {
-  sayHello(request: HelloRequest): Observable<HelloReply>;
+  upload(request: Observable<FileUploadRequest>): Observable<FileUploadResponse>;
 }
 
 export interface ConverterServiceController {
-  sayHello(request: HelloRequest): Promise<HelloReply> | Observable<HelloReply> | HelloReply;
+  upload(
+    request: Observable<FileUploadRequest>,
+  ): Promise<FileUploadResponse> | Observable<FileUploadResponse> | FileUploadResponse;
 }
 
 export function ConverterServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["sayHello"];
+    const grpcMethods: string[] = [];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("ConverterService", method)(constructor.prototype[method], method, descriptor);
     }
-    const grpcStreamMethods: string[] = [];
+    const grpcStreamMethods: string[] = ["upload"];
     for (const method of grpcStreamMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("ConverterService", method)(constructor.prototype[method], method, descriptor);

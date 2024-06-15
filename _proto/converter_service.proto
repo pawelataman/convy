@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package converter;
 
-option go_package = "converter/pb";
+option go_package = "converter/pb"; 
 
 import "converter_messages.proto";
 
 service ConverterService {
-    rpc SayHello (HelloRequest) returns (HelloReply) {}
+    rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);
 }
   

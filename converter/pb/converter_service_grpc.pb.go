@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	ConverterService_SayHello_FullMethodName = "/converter.ConverterService/SayHello"
+	ConverterService_Upload_FullMethodName = "/converter.ConverterService/Upload"
 )
 
 // ConverterServiceClient is the client API for ConverterService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConverterServiceClient interface {
-	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
+	Upload(ctx context.Context, opts ...grpc.CallOption) (ConverterService_UploadClient, error)
 }
 
 type converterServiceClient struct {
@@ -37,21 +37,46 @@ func NewConverterServiceClient(cc grpc.ClientConnInterface) ConverterServiceClie
 	return &converterServiceClient{cc}
 }
 
-func (c *converterServiceClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
+func (c *converterServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (ConverterService_UploadClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HelloReply)
-	err := c.cc.Invoke(ctx, ConverterService_SayHello_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ConverterService_ServiceDesc.Streams[0], ConverterService_Upload_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &converterServiceUploadClient{ClientStream: stream}
+	return x, nil
+}
+
+type ConverterService_UploadClient interface {
+	Send(*FileUploadRequest) error
+	CloseAndRecv() (*FileUploadResponse, error)
+	grpc.ClientStream
+}
+
+type converterServiceUploadClient struct {
+	grpc.ClientStream
+}
+
+func (x *converterServiceUploadClient) Send(m *FileUploadRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *converterServiceUploadClient) CloseAndRecv() (*FileUploadResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(FileUploadResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // ConverterServiceServer is the server API for ConverterService service.
 // All implementations must embed UnimplementedConverterServiceServer
 // for forward compatibility
 type ConverterServiceServer interface {
-	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
+	Upload(ConverterService_UploadServer) error
 	mustEmbedUnimplementedConverterServiceServer()
 }
 
@@ -59,8 +84,8 @@ type ConverterServiceServer interface {
 type UnimplementedConverterServiceServer struct {
 }
 
-func (UnimplementedConverterServiceServer) SayHello(context.Context, *HelloRequest) (*HelloReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedConverterServiceServer) Upload(ConverterService_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
 }
 func (UnimplementedConverterServiceServer) mustEmbedUnimplementedConverterServiceServer() {}
 
@@ -75,22 +100,30 @@ func RegisterConverterServiceServer(s grpc.ServiceRegistrar, srv ConverterServic
 	s.RegisterService(&ConverterService_ServiceDesc, srv)
 }
 
-func _ConverterService_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
-	if err := dec(in); err != nil {
+func _ConverterService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ConverterServiceServer).Upload(&converterServiceUploadServer{ServerStream: stream})
+}
+
+type ConverterService_UploadServer interface {
+	SendAndClose(*FileUploadResponse) error
+	Recv() (*FileUploadRequest, error)
+	grpc.ServerStream
+}
+
+type converterServiceUploadServer struct {
+	grpc.ServerStream
+}
+
+func (x *converterServiceUploadServer) SendAndClose(m *FileUploadResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *converterServiceUploadServer) Recv() (*FileUploadRequest, error) {
+	m := new(FileUploadRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(ConverterServiceServer).SayHello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ConverterService_SayHello_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConverterServiceServer).SayHello(ctx, req.(*HelloRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 // ConverterService_ServiceDesc is the grpc.ServiceDesc for ConverterService service.
@@ -99,12 +132,13 @@ func _ConverterService_SayHello_Handler(srv interface{}, ctx context.Context, de
 var ConverterService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "converter.ConverterService",
 	HandlerType: (*ConverterServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _ConverterService_SayHello_Handler,
+			StreamName:    "Upload",
+			Handler:       _ConverterService_Upload_Handler,
+			ClientStreams: true,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
 	Metadata: "converter_service.proto",
 }

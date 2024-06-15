@@ -1,3 +1,3 @@
 export interface IConverterGatewayInterface {
-  convertImage(file: File, metadata: { sourceFormat: string; targetFormat: string }): void;
+  convertImage<T>(file: T, metadata: { fileName: string; sourceFormat: string; targetFormat: string }): void;
 }

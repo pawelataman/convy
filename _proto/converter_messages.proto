@@ -1,13 +1,14 @@
 syntax = "proto3";
-
+ 
 package converter;
 
 option go_package = "converter/pb";
 
-message HelloRequest { 
-  string name = 1;
+message FileUploadRequest {
+  string file_name = 1;
+  bytes chunk = 2;   
 }
-
-message HelloReply {
-  string message = 1;
+message FileUploadResponse {
+string file_name = 1;
+uint32 size = 2;
 }

@@ -8,12 +8,14 @@
 
 export const protobufPackage = "converter";
 
-export interface HelloRequest {
-  name: string;
+export interface FileUploadRequest {
+  fileName: string;
+  chunk: Uint8Array;
 }
 
-export interface HelloReply {
-  message: string;
+export interface FileUploadResponse {
+  fileName: string;
+  size: number;
 }
 
 export const CONVERTER_PACKAGE_NAME = "converter";
