@@ -18,6 +18,6 @@ func (g *ConverterServer) SayHello(ctx context.Context, request *pb.HelloRequest
 	fmt.Println(request.Name)
 
 	return &pb.HelloReply{
-		Message: "Hello from Server",
+		Message: "Cześć Madzia <3 - Response",
 	}, nil
 }

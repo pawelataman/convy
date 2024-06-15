@@ -2,7 +2,7 @@ import { IConverterGatewayInterface } from '@global/api-interface/converter-gate
 import { FileInterceptor } from '@nest-lab/fastify-multer';
 import { Body, Controller, Get, OnModuleInit, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ConverterSvcOptions } from './converter-svc-options';
 import { ConvertMetadata } from './dto/convert-metadata';
 
@@ -28,13 +28,11 @@ export class ConverterController implements IConverterGatewayInterface, OnModule
   }
 
   @Get('test-service')
-  testService(): void {
+  async testService(): Promise<any> {
     const request = {
-      name: 'Hello from NestJs Client',
+      name: 'Cześć Madzia <3 - Request',
     };
 
-    this.converterService.sayHello(request).subscribe((response) => {
-      console.log(response.message);
-    });
+    return firstValueFrom(this.converterService.sayHello(request));
   }
 }
