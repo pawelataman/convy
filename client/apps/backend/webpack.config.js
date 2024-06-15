@@ -1,4 +1,3 @@
-
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 const { join } = require('path');
 
@@ -14,7 +13,13 @@ module.exports = {
       tsConfig: './tsconfig.app.json',
       optimization: false,
       outputHashing: 'none',
-    })
+      assets: [
+        {
+          input: '../../../_proto',
+          glob: '**/*.proto',
+          output: '_proto/',
+        },
+      ],
+    }),
   ],
 };
-
