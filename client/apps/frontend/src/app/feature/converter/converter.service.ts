@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BaseApiService } from '../../core/api/base-api.service';
-import { environments } from '../../environments/environments';
+import { generateUuid } from '@global/utils/guid';
+import { delay, Observable, of } from 'rxjs';
+import { ConverterApiService } from './converter-api.service';
+import { ConversionRequestMetadata, ConversionResult } from './converter.types';
 
 @Injectable()
-export class ConverterService extends BaseApiService {
-  private readonly _url = `${environments.API_URL}/converter/convert`;
+export class ConverterService {
+  constructor(private readonly _converterApiService: ConverterApiService) {}
 
-  constructor() {
-    super();
-  }
-
-  convertImage(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', new Blob([file]), file.name);
-    return this.http.post(this._url, formData);
+  convertImage(file: File): Observable<ConversionResult> {
+    const metadata: ConversionRequestMetadata = {
+      fileName: file.name,
+      requestId: `${generateUuid()}-${new Date().getTime()}-${file.name}`.split(' ').join('-'),
+      targetFormat: 'png',
+      sourceFormat: 'png',
+    };
+    return of<ConversionResult>({
+      fileName: metadata.fileName,
+      requestId: metadata.requestId,
+      url: 'https://img.freepik.com/premium-photo/beautiful-background-photo-very-nice-photo-se-different-food-photo-different-colorful-scenery_1028782-252259.jpg',
+    }).pipe(delay(1500));
+    // return this._converterApiService.convertImage(file, metadata).pipe(delay(2000));
   }
 }

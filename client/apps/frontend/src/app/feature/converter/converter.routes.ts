@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ConverterComponent } from './converter.component';
+import { ConverterComponent } from './shell/converter.component';
 
 export const routes: Routes = [
   {
