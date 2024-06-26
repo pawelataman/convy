@@ -49,7 +49,7 @@ func (c *converterServiceClient) Upload(ctx context.Context, opts ...grpc.CallOp
 
 type ConverterService_UploadClient interface {
 	Send(*FileUploadRequest) error
-	CloseAndRecv() (*FileUploadResponse, error)
+	Recv() (*FileUploadResponse, error)
 	grpc.ClientStream
 }
 
@@ -61,10 +61,7 @@ func (x *converterServiceUploadClient) Send(m *FileUploadRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *converterServiceUploadClient) CloseAndRecv() (*FileUploadResponse, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
+func (x *converterServiceUploadClient) Recv() (*FileUploadResponse, error) {
 	m := new(FileUploadResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -105,7 +102,7 @@ func _ConverterService_Upload_Handler(srv interface{}, stream grpc.ServerStream)
 }
 
 type ConverterService_UploadServer interface {
-	SendAndClose(*FileUploadResponse) error
+	Send(*FileUploadResponse) error
 	Recv() (*FileUploadRequest, error)
 	grpc.ServerStream
 }
@@ -114,7 +111,7 @@ type converterServiceUploadServer struct {
 	grpc.ServerStream
 }
 
-func (x *converterServiceUploadServer) SendAndClose(m *FileUploadResponse) error {
+func (x *converterServiceUploadServer) Send(m *FileUploadResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -137,6 +134,7 @@ var ConverterService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Upload",
 			Handler:       _ConverterService_Upload_Handler,
+			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},

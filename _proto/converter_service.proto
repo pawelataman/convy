@@ -7,6 +7,6 @@ option go_package = "converter/pb";
 import "converter_messages.proto";
 
 service ConverterService {
-    rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);
+    rpc Upload(stream FileUploadRequest) returns(stream FileUploadResponse);
 }
   

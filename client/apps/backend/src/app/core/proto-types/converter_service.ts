@@ -18,9 +18,7 @@ export interface ConverterServiceClient {
 }
 
 export interface ConverterServiceController {
-  upload(
-    request: Observable<FileUploadRequest>,
-  ): Promise<FileUploadResponse> | Observable<FileUploadResponse> | FileUploadResponse;
+  upload(request: Observable<FileUploadRequest>): Observable<FileUploadResponse>;
 }
 
 export function ConverterServiceControllerMethods() {
