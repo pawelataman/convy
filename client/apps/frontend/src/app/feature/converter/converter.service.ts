@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { generateUuid } from '@global/utils/guid';
+import { generateUuid } from '@libs/utils/guid';
 import { delay, Observable, of } from 'rxjs';
 import { ConverterApiService } from './converter-api.service';
 import { ConversionRequestMetadata, ConversionResult } from './converter.types';

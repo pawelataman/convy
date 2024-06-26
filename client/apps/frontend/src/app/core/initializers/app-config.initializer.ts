@@ -1,5 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { GetConfigResponse } from '@global/api-interface/api-response.interface';
+import { GetConfigResponse } from '@libs/api-interface/api-response.interface';
 import { tap } from 'rxjs';
 import { CoreApiService } from '../api/core-api.service';
 import { ConfigService } from '../services/config.service';

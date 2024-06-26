@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@global/*": ["libs/shared/src/lib/*"]
+      "@backend/common/*": ["apps/backend/src/app/common/*"],
+      "@backend/core/*": ["apps/backend/src/app/core/*"],
+      "@libs/*": ["libs/shared/src/lib/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

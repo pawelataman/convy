@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from './domain/config/config.module';
+import { SettingsModule } from './domain/config/settings.module';
 import { ConverterModule } from './domain/converter/converter.module';
 
 @Module({
-  imports: [ConfigModule, ConverterModule],
+  imports: [SettingsModule, ConverterModule],
   providers: [],
 })
 export class AppModule {}

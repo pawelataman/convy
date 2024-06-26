@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"converter/pb"
 	"fmt"
-	"image"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -26,9 +25,13 @@ func NewConverterServer() *ConverterServer {
 func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error {
 
 	imageBuffer := new(bytes.Buffer)
-
+	fileName := ""
 	for {
 		req, err := stream.Recv()
+
+		if fileName == "" {
+			fileName = req.FileName
+		}
 
 		if err == io.EOF {
 			break
@@ -39,17 +42,9 @@ func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error 
 		}
 
 		chunk := req.GetChunk()
-		fmt.Printf("Recieved %d bytes \n", len(chunk))
 		imageBuffer.Write(chunk)
 	}
 
-	_, imageFormat, err := image.Decode(imageBuffer)
-
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Printf("Image format %s \n", imageFormat)
-	}
-
+	fmt.Println("Done converting image")
 	return stream.SendAndClose(&pb.FileUploadResponse{FileName: "cats.jpeg", Size: 10})
 }

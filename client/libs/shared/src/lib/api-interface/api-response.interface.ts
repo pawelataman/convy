@@ -1,4 +1,4 @@
-export interface GetConfigResponse {
+export interface GetSettingsResponse {
   sourceFormats: string[];
   targetFormats: string[];
 }
