@@ -3,8 +3,16 @@ package api
 import (
 	"bytes"
 	"converter/pb"
+	"fmt"
+	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"io"
 	"log"
+
+	_ "golang.org/x/image/bmp"
+	_ "golang.org/x/image/tiff"
 )
 
 type ConverterServer struct {
@@ -31,8 +39,17 @@ func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error 
 		}
 
 		chunk := req.GetChunk()
+		fmt.Printf("Recieved %d bytes \n", len(chunk))
 		imageBuffer.Write(chunk)
 	}
 
-	return stream.SendAndClose(&pb.FileUploadResponse{FileName: fileName, Size: fileSize})
+	_, imageFormat, err := image.Decode(imageBuffer)
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Printf("Image format %s \n", imageFormat)
+	}
+
+	return stream.SendAndClose(&pb.FileUploadResponse{FileName: "cats.jpeg", Size: 10})
 }
