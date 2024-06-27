@@ -1,9 +1,8 @@
 package api
 
 import (
-	"bytes"
+	"converter/internal/services"
 	"converter/pb"
-	"fmt"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -13,6 +12,10 @@ import (
 	_ "golang.org/x/image/bmp"
 	_ "golang.org/x/image/tiff"
 )
+
+const CHUNK_SIZE = 65 * 1024
+
+var converterService = services.ConverterService{}
 
 type ConverterServer struct {
 	pb.UnimplementedConverterServiceServer
@@ -24,27 +27,31 @@ func NewConverterServer() *ConverterServer {
 
 func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error {
 
-	imageBuffer := new(bytes.Buffer)
-	fileName := ""
-	for {
-		req, err := stream.Recv()
+	converterImageReader, fileName, err := converterService.Convert(stream)
 
-		if fileName == "" {
-			fileName = req.FileName
-		}
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	buff := make([]byte, CHUNK_SIZE)
+
+	for {
+		n, err := converterImageReader.Read(buff)
 
 		if err == io.EOF {
 			break
 		}
+
 		if err != nil {
 			log.Fatal(err)
-			break
 		}
 
-		chunk := req.GetChunk()
-		imageBuffer.Write(chunk)
+		if err = stream.Send(&pb.FileUploadResponse{
+			FileName: fileName,
+			Chunk:    buff[:n],
+		}); err != nil {
+			return err
+		}
 	}
-
-	fmt.Println("Done converting image")
-	return stream.SendAndClose(&pb.FileUploadResponse{FileName: "cats.jpeg", Size: 10})
+	return nil
 }
