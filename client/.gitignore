@@ -42,3 +42,7 @@ Thumbs.db
 
 .nx/cache
 .angular
+
+
+client/apps/backend/public/*
+client/public/*
