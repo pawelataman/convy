@@ -3,14 +3,8 @@ package api
 import (
 	"converter/internal/services"
 	"converter/pb"
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
 	"io"
 	"log"
-
-	_ "golang.org/x/image/bmp"
-	_ "golang.org/x/image/tiff"
 )
 
 const CHUNK_SIZE = 65 * 1024
@@ -27,16 +21,17 @@ func NewConverterServer() *ConverterServer {
 
 func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error {
 
-	converterImageReader, fileName, err := converterService.Convert(stream)
+	convertedImageBuffer, fileName, err := converterService.Convert(stream)
 
 	if err != nil {
 		log.Fatal(err)
+		return err
 	}
 
 	buff := make([]byte, CHUNK_SIZE)
 
 	for {
-		n, err := converterImageReader.Read(buff)
+		n, err := convertedImageBuffer.Read(buff)
 
 		if err == io.EOF {
 			break
@@ -50,6 +45,8 @@ func (g *ConverterServer) Upload(stream pb.ConverterService_UploadServer) error 
 			FileName: fileName,
 			Chunk:    buff[:n],
 		}); err != nil {
+
+			log.Fatal(err)
 			return err
 		}
 	}
