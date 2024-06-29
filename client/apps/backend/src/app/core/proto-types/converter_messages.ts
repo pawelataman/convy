@@ -9,7 +9,6 @@
 export const protobufPackage = "converter";
 
 export interface FileUploadRequest {
-  sourceFormat: string;
   targetFormat: string;
   fileName: string;
   chunk: Uint8Array;

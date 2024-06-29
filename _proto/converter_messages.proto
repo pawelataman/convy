@@ -5,10 +5,9 @@ package converter;
 option go_package = "converter/pb";
 
 message FileUploadRequest {
-  string source_format = 1;
-  string target_format = 2;
-  string file_name = 3;
-  bytes chunk = 4;   
+  string target_format = 1;
+  string file_name = 2;
+  bytes chunk = 3;   
 }
 message FileUploadResponse {
   string file_name = 1;
