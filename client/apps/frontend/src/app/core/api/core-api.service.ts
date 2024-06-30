@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GetConfigResponse } from '@libs/api-interface/api-response.interface';
+import { GetSettingsResponse } from '@libs/api-interface/api-response.interface';
 import { Observable, of } from 'rxjs';
 import { environments } from '../../environments/environments';
 import { BaseApiService } from './base-api.service';
@@ -14,7 +14,7 @@ export class CoreApiService extends BaseApiService {
     super();
   }
 
-  getAppConfig(): Observable<GetConfigResponse> {
+  getAppConfig(): Observable<GetSettingsResponse> {
     return of({ sourceFormats: ['png'], targetFormats: ['png'] });
     //return this.http.get<GetConfigResponse>(this._url);
   }
