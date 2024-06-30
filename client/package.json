@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "serve:backend": "npx nx run backend:serve",
+    "build:backend": "npx nx run backend:build",
     "serve:frontend": "npx nx run frontend:serve",
     "serve:all": "npx nx run-many --target=serve",
     "migration:generate": "npx drizzle-kit generate",

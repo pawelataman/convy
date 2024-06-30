@@ -13,6 +13,7 @@ module.exports = {
       tsConfig: './tsconfig.app.json',
       optimization: false,
       outputHashing: 'none',
+      sourceMap: true,
       assets: [
         {
           input: '../../../_proto',
