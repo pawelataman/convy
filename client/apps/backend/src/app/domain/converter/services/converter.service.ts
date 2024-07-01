@@ -11,6 +11,22 @@ export class ConverterService {
   ) {}
 
   async convert(convertable: ConvertableFile): Promise<string> {
-    return await this.internalConverterService.convert(convertable);
+    const useInternal = true;
+
+    if (useInternal) {
+      return this._convertInternal(convertable);
+    } else {
+      return this._convertExternal(convertable);
+    }
+  }
+
+  private async _convertInternal(convertable: ConvertableFile): Promise<any> {
+    const fileUri = await this.internalConverterService.convert(convertable);
+    return fileUri;
+  }
+
+  private async _convertExternal(convertable: ConvertableFile): Promise<string> {
+    const fileUri = await this.externalConverterService.convert(convertable);
+    return 'EXTERNAL OK';
   }
 }
