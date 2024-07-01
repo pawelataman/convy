@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import * as Buffer from 'node:buffer';
+import { BadRequestException, Injectable, InternalServerErrorException, UnprocessableEntityException } from '@nestjs/common';
 import sharp from 'sharp';
 
 import { wrapInPromise } from '@backend/common/utils/promise';
@@ -17,19 +16,19 @@ export class SharpConverterService {
     let sharpFileInstance = sharp(sourceBuffer);
 
     if (!(await this._checkImageValid(sharpFileInstance))) {
-      throw new Error('Unprocessable or corrupted image');
+      throw new UnprocessableEntityException('Unprocessable or corrupted image');
     }
 
     const converterFunction = this._converterFnMap.get(targetFormat as ImageFileFormat);
     if (!converterFunction) {
-      throw new Error('Image format not supported');
+      throw new BadRequestException('Image format not supported');
     }
 
     try {
       sharpFileInstance = await converterFunction(sharpFileInstance);
       return this._toBuffer(sharpFileInstance);
     } catch (e) {
-      throw new Error('Error while formating image');
+      throw new InternalServerErrorException('Error while formating image');
     }
   }
 
