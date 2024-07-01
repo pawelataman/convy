@@ -1,20 +1,13 @@
-FROM        node:20-alpine as node
+FROM node:20-alpine
 
-WORKDIR     /app
+WORKDIR /app
 
-COPY        ./client/package*.json ./
-RUN         npm install
+COPY ./client/package*.json .
 
-COPY        ../client .
-RUN         npx nx run frontend:build:production
+RUN npm install ci
 
-FROM        node:20-alpine
+COPY ./client/ .
 
-WORKDIR     /usr/app
+CMD  ["npx", "nx","run", "frontend:serve","--host=0.0.0.0","--disable-host-check"]
 
-COPY        --from=node /app/dist/apps/frontend ./
-
-EXPOSE      4000
-
-CMD         ["node","server/server.mjs"]
-
+EXPOSE 4200

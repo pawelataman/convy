@@ -45,4 +45,5 @@ Thumbs.db
 .angular
 
 example-images
-
+minio
+.env

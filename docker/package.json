@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "guid": "^0.0.12"
-  },
-  "devDependencies": {
-    "@types/guid": "^1.0.3"
-  }
-}
