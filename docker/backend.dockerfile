@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app/client
 
+RUN npm i -g nx
+
 COPY ./client/package*.json .
 
 RUN npm install ci

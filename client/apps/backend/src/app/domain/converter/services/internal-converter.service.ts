@@ -7,8 +7,7 @@ import { SharpConverterService } from './sharp-converter.service';
 export class InternalConverterService implements IConverter {
   constructor(private sharpConverterService: SharpConverterService) {}
 
-  async convert(file: ConvertableFile): Promise<string> {
-    await this.sharpConverterService.convert(file.buffer, file.metadata.targetFormat);
-    return file.metadata.fileName;
+  async convert(file: ConvertableFile): Promise<Buffer> {
+    return this.sharpConverterService.convert(file.buffer, file.metadata.targetFormat);
   }
 }

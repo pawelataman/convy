@@ -16,7 +16,7 @@ export class ConverterController {
   async convertImage(@UploadedFile() file: Express.Multer.File, @Body() metadata: ConversionRequestMetadata): Promise<string> {
     const convertableFile: ConvertableFile = {
       metadata: {
-        fileName: metadata.fileName,
+        fileName: file.originalname,
         targetFormat: metadata.targetFormat,
       },
       buffer: file.buffer,
