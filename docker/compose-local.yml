@@ -16,7 +16,7 @@ services:
       context: ..
       dockerfile: ./docker/backend.dockerfile
     volumes:
-      - "../client:/app/client"
+      - "../client/apps/backend:/app/client/apps/backend"
       - "/app/client/node_modules"  # Fixed typo here
     ports:
       - "3000:3000"
