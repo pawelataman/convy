@@ -1,7 +1,6 @@
 import { normalizeFileName } from '@backend/common/utils/file';
-import { MinioClient } from '@backend/core/storage/minio-client';
+import { FileStorageService } from '@backend/core/storage/file-storage.service';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { UploadedObjectInfo } from 'minio/dist/main/internal/type';
 import { ConvertableFile } from '../types/convertable-file.type';
 import { ExternalConverterService } from './external-converter.service';
 import { InternalConverterService } from './internal-converter.service';
@@ -11,7 +10,7 @@ export class ConverterService {
   constructor(
     private readonly externalConverterService: ExternalConverterService,
     private readonly internalConverterService: InternalConverterService,
-    private readonly minioClient: MinioClient
+    private readonly storageService: FileStorageService
   ) {}
 
   async convert(convertable: ConvertableFile): Promise<string> {
@@ -26,10 +25,10 @@ export class ConverterService {
     return newFileName;
   }
 
-  private async _convertInternal(convertable: ConvertableFile, newFileName: string): Promise<UploadedObjectInfo> {
+  private async _convertInternal(convertable: ConvertableFile, newFileName: string): Promise<string> {
     const convertedImageBuffer = await this.internalConverterService.convert(convertable);
     try {
-      return await this.minioClient.putObject(newFileName, convertedImageBuffer);
+      return await this.storageService.putObject(newFileName, convertedImageBuffer);
     } catch (e) {
       throw new InternalServerErrorException('Error while writing file to external storage');
     }
