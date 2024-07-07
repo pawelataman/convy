@@ -3,7 +3,7 @@ import { FileStorageService } from '@backend/core/storage/file-storage.service';
 import { generateUuid } from '@libs/utils/guid';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConvertableFile } from '../types/convertable-file.type';
-import { StorageUploadInfo } from '../types/storage-upload.type';
+import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
 import { ExternalConverterService } from './external-converter.service';
 import { InternalConverterService } from './internal-converter.service';
 

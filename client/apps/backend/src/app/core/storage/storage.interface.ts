@@ -1,4 +1,4 @@
-import { StorageUploadInfo } from '../../domain/converter/types/storage-upload.type';
+import { StorageUploadInfo } from './storage-upload.type';
 import { Readable } from 'stream';
 
 export interface FileStorage {

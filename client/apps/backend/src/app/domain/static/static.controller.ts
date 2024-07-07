@@ -1,5 +1,5 @@
+import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
 import { Controller, Get, Header, HttpCode, HttpStatus, Param, StreamableFile } from '@nestjs/common';
-import { StorageUploadInfo } from '../converter/types/storage-upload.type';
 import { StaticService } from './services/static.service';
 
 @Controller('static')

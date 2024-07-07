@@ -2,7 +2,7 @@ import { MinioClient } from '@backend/core/storage/minio-client';
 import { FileStorage } from '@backend/core/storage/storage.interface';
 import { Injectable } from '@nestjs/common';
 import { Readable } from 'stream';
-import { StorageUploadInfo } from '../../domain/converter/types/storage-upload.type';
+import { StorageUploadInfo } from './storage-upload.type';
 
 @Injectable()
 export class FileStorageService implements FileStorage {
