@@ -11,21 +11,21 @@ services:
   #   ports:
   #     - "4200:4200"
 
-  backend:
-    build:
-      context: ..
-      dockerfile: ./docker/backend.dockerfile
-    volumes:
-      - "../client/apps/backend:/app/client/apps/backend"
-      - "/app/client/node_modules"  # Fixed typo here
-    environment:
-    - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
-    - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
-    - MINIO_PORT=${MINIO_PORT}
-    - MINIO_HOST=${MINIO_HOST}
-    - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
-    ports:
-      - "3000:3000"
+  # backend:
+  #   build:
+  #     context: ..
+  #     dockerfile: ./docker/backend.dockerfile
+  #   volumes:
+  #     - "../client/apps/backend:/app/client/apps/backend"
+  #     - "/app/client/node_modules"  # Fixed typo here
+  #   environment:
+  #   - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+  #   - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+  #   - MINIO_PORT=${MINIO_PORT}
+  #   - MINIO_HOST=${MINIO_HOST}
+  #   - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
+  #   ports:
+  #     - "3000:3000"
 
   minio:
     image: minio/minio:RELEASE.2024-06-04T19-20-08Z
@@ -41,6 +41,18 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
       - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
 
+  db:
+    image: postgres:16.3
+    volumes:
+      - convy_db:/var/lib/postgresql/data
+
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DB}
+
 volumes:
   minio_data:
-    driver: local
+  convy_db:
