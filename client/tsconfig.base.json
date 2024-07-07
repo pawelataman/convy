@@ -23,6 +23,9 @@
       "@backend/core/*": [
         "apps/backend/src/app/core/*"
       ],
+      "@backend/domain/*": [
+        "apps/backend/src/app/domain/*"
+      ],
       "@libs/*": [
         "libs/shared/src/lib/*"
       ]

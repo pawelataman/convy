@@ -5,9 +5,10 @@ import { createDbUrl } from './utils';
 
 const migrationClient = postgres(createDbUrl(), { max: 1 });
 const db = drizzle(migrationClient);
+
 async function runMigration() {
   await migrate(db, {
-    migrationsFolder: './src/database/migrations',
+    migrationsFolder: './apps/backend/src/database/migrations/',
   });
 
   await migrationClient.end();

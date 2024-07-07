@@ -8,7 +8,7 @@
     "serve:frontend": "npx nx run frontend:serve",
     "serve:all": "npx nx run-many --target=serve",
     "migration:generate": "npx drizzle-kit generate",
-    "migration:run": "tsx ./src/drizzle/migrate.ts"
+    "migration:run": "tsx ./apps/backend/src/database/migrate.ts"
   },
   "private": true,
   "dependencies": {
@@ -97,6 +97,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "ts-proto": "^1.180.0",
+    "tsx": "^4.16.2",
     "typescript": "~5.4.2",
     "webpack-cli": "^5.1.4"
   }

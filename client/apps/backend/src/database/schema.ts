@@ -1,9 +1,20 @@
-import { pgSchema, uuid, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
-// USER
-export const UserSchema = pgSchema('user');
+export const mediaTypes = pgTable('media_type', {
+  id: serial('id').primaryKey().notNull(),
+  name: varchar('name').notNull(),
+});
 
-export const User = UserSchema.table('user', {
-  id: uuid('id').primaryKey().defaultRandom().notNull(),
-  email: varchar('email').notNull(),
+export const fileType = pgTable('file_type', {
+  id: serial('id').primaryKey().notNull(),
+  name: varchar('name').notNull(),
+  media_type_id: integer('media_type_id')
+    .references(() => mediaTypes.id)
+    .notNull(),
+});
+
+export const uploadInfo = pgTable('upload_info', {
+  id: uuid('id').defaultRandom().notNull(),
+  path: varchar('upload_path').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
