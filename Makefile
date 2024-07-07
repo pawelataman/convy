@@ -10,6 +10,8 @@ proto-ts-gen:
 	@protoc --ts_proto_opt=nestJs=true --ts_proto_out=${API_GATEWAY_PROTO_PATH} --plugin=client/node_modules/ts-proto/protoc-gen-ts_proto ./${PROTO_DIR}/*.proto -I ./${PROTO_DIR}
 proto-ts-clean:
 	@rm ${API_GATEWAY_PROTO_PATH}/*.ts
+docker-dev:
+	@docker-compose -f ./docker/compose-local.yml --env-file=.env up --build
 
 proto-gen: proto-go-gen proto-ts-gen
 proto-clean: proto-go-clean proto-ts-clean

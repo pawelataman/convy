@@ -1,3 +1,4 @@
+import { STATIC_STORAGE_CONFIG } from '@backend/core/config/storage.config';
 import { Body, Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
@@ -21,6 +22,9 @@ export class ConverterController {
       },
       buffer: file.buffer,
     };
-    return this.converterService.convert(convertableFile);
+
+    const convertedFilePath = await this.converterService.convert(convertableFile);
+
+    return `/${STATIC_STORAGE_CONFIG.staticEndpoint}/${convertedFilePath}`;
   }
 }

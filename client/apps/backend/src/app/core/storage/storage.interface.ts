@@ -1,5 +1,7 @@
+import { StorageUploadInfo } from '../../domain/converter/types/storage-upload.type';
+
 export interface FileStorage {
-  putObject(fileName: string, buffer: Buffer): Promise<string>;
+  putObject(storageUploadInfo: StorageUploadInfo, buffer: Buffer): Promise<string>;
 
   // retrieveFile(fileName: string): Promise<Buffer>;
 }

@@ -1,10 +1,9 @@
-import { FileStorage } from '@backend/core/storage/storage.interface';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as Minio from 'minio';
 
 @Injectable()
-export class MinioClient implements FileStorage {
+export class MinioClient {
   private minioClient: Minio.Client;
 
   constructor(private readonly configService: ConfigService) {
@@ -17,10 +16,10 @@ export class MinioClient implements FileStorage {
     });
   }
 
-  async putObject(objectName: string, buffer: Buffer): Promise<string> {
+  async putObject(objectPath: string, buffer: Buffer): Promise<string> {
     const bucketName = this.configService.get('MINIO_DEFAULT_BUCKETS');
-    const info = await this.minioClient.putObject(bucketName, objectName, buffer);
-    return info.etag;
+    const info = await this.minioClient.putObject(bucketName, objectPath, buffer);
+    return info.versionId;
   }
 
   async retrieveFile(): Promise<any> {
