@@ -17,3 +17,8 @@ docker-prune:
 proto-gen: proto-go-gen proto-ts-gen
 proto-clean: proto-go-clean proto-ts-clean
 proto: proto-clean proto-gen
+
+backend-dev:
+	@npm run serve:backend
+frontend-dev:
+	@npm run serve:frontend
