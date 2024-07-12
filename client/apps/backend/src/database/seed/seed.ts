@@ -1,7 +1,7 @@
+import { createDbUrl } from '@backend/common/utils/db';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { fileType, mediaType } from '../schema';
-import { createDbUrl } from '../utils';
 import { fileTypesData } from './file-types';
 import { mediaTypesData } from './media-types';
 

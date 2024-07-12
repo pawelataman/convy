@@ -28,6 +28,9 @@
       ],
       "@libs/*": [
         "libs/shared/src/lib/*"
+      ],
+      "@database/*": [
+        "apps/backend/src/database/*"
       ]
     }
   },

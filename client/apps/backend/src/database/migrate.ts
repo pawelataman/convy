@@ -1,7 +1,7 @@
+import { createDbUrl } from '@backend/common/utils/db';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
-import { createDbUrl } from './utils';
 
 const migrationClient = postgres(createDbUrl(), { max: 1 });
 const db = drizzle(migrationClient);
