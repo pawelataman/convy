@@ -1,5 +1,5 @@
 import { defineConfig } from 'drizzle-kit';
-import { createDbUrl } from './src/database/utils';
+import { createDbUrl } from './src/app/common/utils/db';
 
 export default defineConfig({
   schema: './apps/backend/src/database/schema.ts',

@@ -3,9 +3,9 @@ import { FileUploadRequest } from '@backend/core/proto-types/converter_messages'
 import { CONVERTER_PACKAGE_NAME, CONVERTER_SERVICE_NAME, ConverterServiceClient } from '@backend/core/proto-types/converter_service';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { map, Observable } from 'rxjs';
-import { IConverter } from '../interfaces/converter.interface';
+import { Observable, map } from 'rxjs';
 import { ConvertableFile } from '../types/convertable-file.type';
+import { IConverter } from '../types/converter.interface';
 import { FileWriterService } from './file-writer.service';
 
 @Injectable()
