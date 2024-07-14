@@ -1,4 +1,3 @@
-import { InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, serial, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 export const mediaType = pgTable('media_type', {
@@ -20,7 +19,3 @@ export const uploadInfo = pgTable('upload_info', {
   dirName: varchar('dir_name').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
-
-export type MediaTypeModel = InferSelectModel<typeof mediaType>;
-export type FileTypeModel = InferSelectModel<typeof fileType>;
-export type UploadInfoModel = InferSelectModel<typeof uploadInfo>;
