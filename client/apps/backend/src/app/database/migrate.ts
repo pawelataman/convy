@@ -8,7 +8,7 @@ const db = drizzle(migrationClient);
 
 async function runMigration() {
   await migrate(db, {
-    migrationsFolder: './apps/backend/src/database/migrations/',
+    migrationsFolder: './apps/backend/src/app/database/migrations/',
   });
 
   await migrationClient.end();
