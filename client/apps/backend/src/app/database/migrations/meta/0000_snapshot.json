@@ -1,0 +1,179 @@
+{
+  "id": "79c00e59-738b-416c-a114-dc559b7b9db6",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.file_type": {
+      "name": "file_type",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_type_id": {
+          "name": "media_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_supported": {
+          "name": "is_supported",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "file_type_media_type_id_media_type_id_fk": {
+          "name": "file_type_media_type_id_media_type_id_fk",
+          "tableFrom": "file_type",
+          "tableTo": "media_type",
+          "columnsFrom": [
+            "media_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.file_type_convertable_to": {
+      "name": "file_type_convertable_to",
+      "schema": "",
+      "columns": {
+        "file_type_id": {
+          "name": "file_type_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "convertable_to_id": {
+          "name": "convertable_to_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "file_type_convertable_to_file_type_id_file_type_id_fk": {
+          "name": "file_type_convertable_to_file_type_id_file_type_id_fk",
+          "tableFrom": "file_type_convertable_to",
+          "tableTo": "file_type",
+          "columnsFrom": [
+            "file_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "file_type_convertable_to_convertable_to_id_file_type_id_fk": {
+          "name": "file_type_convertable_to_convertable_to_id_file_type_id_fk",
+          "tableFrom": "file_type_convertable_to",
+          "tableTo": "file_type",
+          "columnsFrom": [
+            "convertable_to_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "file_type_convertable_to_file_type_id_convertable_to_id_pk": {
+          "name": "file_type_convertable_to_file_type_id_convertable_to_id_pk",
+          "columns": [
+            "file_type_id",
+            "convertable_to_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.media_type": {
+      "name": "media_type",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.upload_info": {
+      "name": "upload_info",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dir_name": {
+          "name": "dir_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
