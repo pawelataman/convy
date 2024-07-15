@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { InferSelectModel, relations } from 'drizzle-orm';
 import { boolean, integer, pgTable, primaryKey, serial, varchar } from 'drizzle-orm/pg-core';
 import mediaType from './media-type.schema';
 
@@ -10,6 +10,8 @@ const fileType = pgTable('file_type', {
     .notNull(),
   is_supported: boolean('is_supported').default(true),
 });
+
+export type FileTypeEntity = InferSelectModel<typeof fileType>;
 
 export const fileTypeRelations = relations(fileType, ({ many }) => ({
   convertableTo: many(fileTypeConvertableTo, { relationName: 'convertableTo' }),

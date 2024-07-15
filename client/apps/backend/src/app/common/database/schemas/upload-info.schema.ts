@@ -1,3 +1,4 @@
+import { InferSelectModel } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 const uploadInfo = pgTable('upload_info', {
@@ -8,3 +9,5 @@ const uploadInfo = pgTable('upload_info', {
 });
 
 export default uploadInfo;
+
+export type UploadInfoEntity = InferSelectModel<typeof uploadInfo>;

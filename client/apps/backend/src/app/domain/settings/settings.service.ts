@@ -1,3 +1,4 @@
+import { SettingsDto } from '@backend/domain/settings/dto/settings.dto';
 import { SettingsRepository } from '@backend/domain/settings/settings.repository';
 import { Injectable } from '@nestjs/common';
 
@@ -5,11 +6,14 @@ import { Injectable } from '@nestjs/common';
 export class SettingsService {
   constructor(private readonly _settingsRepository: SettingsRepository) {}
 
-  getFileFormats() {
-    return this._settingsRepository.getFileFormats();
+  getFormatsForFileType(fileTypeId: number) {
+    return this._settingsRepository.getFormatsForFileType(fileTypeId);
   }
 
-  getMediaTypes() {
-    return this._settingsRepository.getMediaTypes();
+  async getSettings(): Promise<SettingsDto> {
+    const [supportedFormats] = await Promise.all([this._settingsRepository.getSupportedFormats()]);
+    return {
+      supportedFormats,
+    };
   }
 }

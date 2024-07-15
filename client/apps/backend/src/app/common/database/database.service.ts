@@ -12,7 +12,7 @@ export class DatabaseService {
 
   constructor() {
     this._dbClient = postgres(createDbUrl());
-    this._dbInstance = drizzle(this._dbClient, { schema });
+    this._dbInstance = drizzle(this._dbClient, { schema, logger: true });
   }
 
   get dbInstance(): PostgresJsDatabase<typeof schema> {
