@@ -25,8 +25,12 @@ export class BaseApiService implements IConverterGatewayInterface {
     const formData = new FormData();
     formData.append('file', new Blob([file]), file.name);
     formData.append('requestId', metadata.requestId);
-    formData.append('targetFormat', metadata.targetFormat);
+    formData.append('targetFormat', `${metadata.targetFormatId}`);
 
     return this._http.post<ConversionResponseMetadata>(`${this._url}/converter/convert`, formData);
+  }
+
+  downloadImage(downloadUrl: string) {
+    return this._http.get(`${this._url}/${downloadUrl}`);
   }
 }

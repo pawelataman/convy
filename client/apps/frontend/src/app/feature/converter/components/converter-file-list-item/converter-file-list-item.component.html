@@ -1,70 +1,73 @@
 @if (viewType() === "list") {
 
-<div class="flex items-center justify-between border-[1px] rounded-md w-full my-2 h-16 pr-4">
-  <div class="flex items-center h-16 gap-4">
-    <img [src]="vm().file.file | fileToUrl" class="h-full" />
-    <span>{{ vm().file.file.name }}</span>
-  </div>
-  <div class="flex items-center gap-4">
-    <span class="text-gray-400">{{ file().file.size | fileSize }}</span>
-    <div>
-      <span class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
+  <div class="flex items-center justify-between border-[1px] rounded-md w-full my-2 h-16 pr-4">
+    <div class="flex items-center h-16 gap-4">
+      <img [src]="vm().file.file | fileToUrl" class="h-full" />
+      <span>{{ vm().file.file.name }}</span>
     </div>
-    <app-converter-file-list-item-action
-      [status]="vm().status"
-      (convert)="sendFileConvert()"
-      (error)="fileConversionError()"
-      [targetFormat]="targetFormat()"
-    />
+    <div class="flex items-center gap-4">
+      <app-converter-select-target [(targetFormat)]="targetFormat" />
+      <span class="text-gray-400">{{ file().file.size | fileSize }}</span>
+      <div>
+        <span
+          class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
+      </div>
+      <app-converter-file-list-item-action
+        [status]="vm().status"
+        (convert)="sendFileConvert()"
+        (download)="downloadFile()"
+        (error)="fileConversionError()"
+      />
+    </div>
   </div>
-</div>
 } @else if (viewType() === "grid") {
-<div class="w-full h-80 overflow-clip relative">
-  <img [src]="vm().file.file | fileToUrl" alt="Image" class="h-full w-full object-cover" />
-  <div class="absolute inset-0 flex justify-center items-center">
-    <div class="flex flex-row justify-between items-center absolute top-0 w-full px-4 py-2 bg-gray-100 bg-opacity-80">
-      <span class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
+  <div class="w-full h-80 overflow-clip relative">
+    <img [src]="vm().file.file | fileToUrl" alt="Image" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 flex justify-center items-center">
+      <div class="flex flex-row justify-between items-center absolute top-0 w-full px-4 py-2 bg-gray-100 bg-opacity-80">
+        <span
+          class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
 
-      <div class="flex flex-row gap-4">
-        <svg
-          (click)="removeItem.emit(file().id)"
-          aria-hidden="true"
-          class="hover:cursor-pointer hover:text-green-500 w-6 h-6 text-gray-500"
-          fill="none"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-          />
-        </svg>
+        <div class="flex flex-row gap-4">
+          <svg
+            (click)="removeItem.emit(file().id)"
+            aria-hidden="true"
+            class="hover:cursor-pointer hover:text-green-500 w-6 h-6 text-gray-500"
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
 
-        <svg
-          aria-hidden="true"
-          class="hover:cursor-pointer hover:text-green-500 w-6 h-6 text-gray-500"
-          fill="none"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-          />
-        </svg>
+          <svg
+            aria-hidden="true"
+            class="hover:cursor-pointer hover:text-green-500 w-6 h-6 text-gray-500"
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 }

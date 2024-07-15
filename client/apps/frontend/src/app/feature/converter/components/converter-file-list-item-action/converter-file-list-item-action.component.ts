@@ -10,7 +10,6 @@ import { ConversionStatus } from '../../converter.types';
 })
 export class ConverterActionComponent {
   status = input.required<ConversionStatus>();
-  targetFormat = input<string>();
   convert = output();
   download = output();
   error = output();

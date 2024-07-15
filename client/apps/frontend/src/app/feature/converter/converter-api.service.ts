@@ -14,4 +14,8 @@ export class ConverterApiService {
   convertImage(file: Blob, metadata: ConversionRequestMetadata): Observable<ConversionResponseMetadata> {
     return this._baseApiService.convert(file, metadata);
   }
+
+  downloadImage(downloadUrl: string) {
+    return this._baseApiService.downloadImage(downloadUrl);
+  }
 }

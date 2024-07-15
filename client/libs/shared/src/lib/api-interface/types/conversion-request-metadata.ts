@@ -5,5 +5,5 @@ export class ConversionRequestMetadata {
   requestId: string;
 
   @IsNotEmpty()
-  targetFormat: string;
+  targetFormatId: number;
 }
