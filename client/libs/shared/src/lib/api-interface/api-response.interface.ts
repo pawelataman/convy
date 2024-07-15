@@ -1,4 +1,8 @@
 export interface GetSettingsResponse {
-  sourceFormats: string[];
-  targetFormats: string[];
+  supportedFileTypes: FileTypeDTO[];
+}
+
+export interface FileTypeDTO {
+  id: number;
+  name: string;
 }

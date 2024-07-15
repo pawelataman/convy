@@ -1,14 +1,14 @@
-import { FileTypeDTO } from '@backend/domain/settings/dto/file-type.dto';
-import { SettingsDto } from '@backend/domain/settings/dto/settings.dto';
 import { SettingsService } from '@backend/domain/settings/settings.service';
+import { FileTypeDTO, GetSettingsResponse } from '@libs/api-interface/api-response.interface';
+import { IConverterGatewayInterface } from '@libs/api-interface/converter-gateway.interface';
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 
 @Controller('settings')
-export class SettingsController {
+export class SettingsController implements Partial<IConverterGatewayInterface> {
   constructor(private readonly _settingsService: SettingsService) {}
 
   @Get()
-  async getSettings(): Promise<SettingsDto> {
+  async getSettings(): Promise<GetSettingsResponse> {
     return this._settingsService.getSettings();
   }
 

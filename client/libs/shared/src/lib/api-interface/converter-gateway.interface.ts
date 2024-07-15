@@ -1,3 +1,7 @@
+import { FileTypeDTO, GetSettingsResponse } from './api-response.interface';
+
 export interface IConverterGatewayInterface {
-  convertImage<T>(file: T, metadata: { fileName: string; sourceFormat: string; targetFormat: string }): void;
+  getSettings(): Promise<GetSettingsResponse>;
+
+  getFormatsForFileType(fileTypeId: number): Promise<FileTypeDTO[]>;
 }
