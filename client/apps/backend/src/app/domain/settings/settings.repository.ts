@@ -1,5 +1,5 @@
-import { fileType, mediaType } from '@backend/common/database/schema';
-import { DatabaseService } from '@backend/core/storage/database.service';
+import { DatabaseService } from '@backend/common/database/database.service';
+import { fileType, mediaType } from '@backend/common/database/schemas';
 import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 

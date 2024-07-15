@@ -1,12 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { boolean, integer, pgTable, primaryKey, serial, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, primaryKey, serial, varchar } from 'drizzle-orm/pg-core';
+import mediaType from './media-type.schema';
 
-export const mediaType = pgTable('media_type', {
-  id: serial('id').primaryKey().notNull(),
-  name: varchar('name').notNull(),
-});
-
-export const fileType = pgTable('file_type', {
+const fileType = pgTable('file_type', {
   id: serial('id').primaryKey().notNull(),
   name: varchar('name').notNull(),
   media_type_id: integer('media_type_id')
@@ -48,9 +44,4 @@ export const fileTypeOnFileTypeRelations = relations(fileTypeConvertableTo, ({ o
   }),
 }));
 
-export const uploadInfo = pgTable('upload_info', {
-  id: uuid('id').defaultRandom().notNull(),
-  fileName: varchar('file_name').notNull(),
-  dirName: varchar('dir_name').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+export default fileType;
