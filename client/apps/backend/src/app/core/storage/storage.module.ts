@@ -10,4 +10,4 @@ import { Global, Module } from '@nestjs/common';
   providers: [MinioClient, FileStorageService, DatabaseService, SettingsService, SettingsRepository],
   exports: [MinioClient, FileStorageService, DatabaseService, SettingsService, SettingsRepository],
 })
-export class CoreModule {}
+export class StorageModule {}

@@ -1,6 +1,6 @@
-import { fileType } from '@backend/common/database/schemas';
 import { relations } from 'drizzle-orm';
 import { integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import fileType from './file-type.schema';
 
 const storageInfo = pgTable('storage_info', {
   id: uuid('id').defaultRandom().notNull(),

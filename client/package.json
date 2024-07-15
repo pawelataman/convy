@@ -8,8 +8,8 @@
     "serve:frontend": "npx nx run frontend:serve",
     "serve:all": "npx nx run-many --target=serve",
     "db:generate": "npx drizzle-kit generate --config ./apps/backend/drizzle.config.ts",
-    "db:migete": "tsx --tsconfig ./tsconfig.base.json apps/backend/src/app/common/database/migrate.ts",
-    "db:seed": "tsx --tsconfig ./tsconfig.base.json apps/backend/src/app/common/database/seed/seed.ts",
+    "db:migrate": "tsx --tsconfig ./tsconfig.base.json ./apps/backend/src/app/common/database/migrate.ts",
+    "db:seed": "tsx --tsconfig ./tsconfig.base.json ./apps/backend/src/app/common/database/seed/seed.ts",
     "db:studio": "npx drizzle-kit studio --config ./apps/backend/drizzle.config.ts"
   },
   "private": true,

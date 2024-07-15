@@ -1,5 +1,5 @@
 {
-  "id": "79c00e59-738b-416c-a114-dc559b7b9db6",
+  "id": "0ff01dc6-f5f2-4d7f-9915-27cc48009cc5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -132,8 +132,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.upload_info": {
-      "name": "upload_info",
+    "public.storage_info": {
+      "name": "storage_info",
       "schema": "",
       "columns": {
         "id": {
@@ -143,17 +143,23 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "file_name": {
-          "name": "file_name",
+        "storage_path": {
+          "name": "storage_path",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "dir_name": {
-          "name": "dir_name",
+        "request_id": {
+          "name": "request_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "file_type_id": {
+          "name": "file_type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -164,7 +170,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "storage_info_file_type_id_file_type_id_fk": {
+          "name": "storage_info_file_type_id_file_type_id_fk",
+          "tableFrom": "storage_info",
+          "tableTo": "file_type",
+          "columnsFrom": [
+            "file_type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

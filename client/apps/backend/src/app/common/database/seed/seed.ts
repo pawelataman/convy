@@ -23,8 +23,8 @@ async function seedConvertableToFileTypes() {
 }
 
 async function runSeed() {
-  // await seedMediaTypes();
-  // await seedFileTypes();
+  await seedMediaTypes();
+  await seedFileTypes();
   await seedConvertableToFileTypes();
   await migrationClient.end();
 }

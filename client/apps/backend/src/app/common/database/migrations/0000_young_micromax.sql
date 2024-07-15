@@ -16,10 +16,11 @@ CREATE TABLE IF NOT EXISTS "media_type" (
 	"name" varchar NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "upload_info" (
+CREATE TABLE IF NOT EXISTS "storage_info" (
 	"id" uuid DEFAULT gen_random_uuid() NOT NULL,
-	"file_name" varchar NOT NULL,
-	"dir_name" varchar NOT NULL,
+	"storage_path" varchar NOT NULL,
+	"request_id" varchar NOT NULL,
+	"file_type_id" integer,
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
@@ -37,6 +38,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "file_type_convertable_to" ADD CONSTRAINT "file_type_convertable_to_convertable_to_id_file_type_id_fk" FOREIGN KEY ("convertable_to_id") REFERENCES "public"."file_type"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "storage_info" ADD CONSTRAINT "storage_info_file_type_id_file_type_id_fk" FOREIGN KEY ("file_type_id") REFERENCES "public"."file_type"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
