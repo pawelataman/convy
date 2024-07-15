@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ConversionRequestMetadata, ConversionResponseMetadata, FileType, GetSettingsResponse } from '@libs/api-interface/api-response.interface';
 import { IConverterGatewayInterface } from '@libs/api-interface/converter-gateway.interface';
+import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
+import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
+import { FileType } from '@libs/api-interface/types/file-type';
+import { GetSettingsResponse } from '@libs/api-interface/types/get-settings-response';
 import { Observable } from 'rxjs';
 import { environments } from '../../environments/environments';
 
@@ -21,9 +24,7 @@ export class BaseApiService implements IConverterGatewayInterface {
   convert(file: Blob, metadata: ConversionRequestMetadata): Observable<ConversionResponseMetadata> {
     const formData = new FormData();
     formData.append('file', new Blob([file]), file.name);
-    formData.append('fileName', metadata.fileName);
     formData.append('requestId', metadata.requestId);
-    formData.append('sourceFormat', metadata.sourceFormat);
     formData.append('targetFormat', metadata.targetFormat);
 
     return this._http.post<ConversionResponseMetadata>(`${this._url}/converter/convert`, formData);

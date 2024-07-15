@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, model, output, signal } from '@angular/core';
-import { ConversionResponseMetadata } from '@libs/api-interface/api-response.interface';
+import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
 import { catchError, of } from 'rxjs';
 import { FileSizePipe } from '../../../../core/pipes/file-size.pipe';
 import { FileToUrlPipe } from '../../../../core/pipes/file-to-url.pipe';

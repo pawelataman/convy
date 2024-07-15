@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ConversionRequestMetadata, ConversionResponseMetadata } from '@libs/api-interface/api-response.interface';
+import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
+import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
 import { Observable } from 'rxjs';
 import { BaseApiService } from '../../core/api/base-api.service';
 import { environments } from '../../environments/environments';

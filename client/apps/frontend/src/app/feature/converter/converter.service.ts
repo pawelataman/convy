@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ConversionRequestMetadata, ConversionResponseMetadata } from '@libs/api-interface/api-response.interface';
+import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
+import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
 import { generateUuid } from '@libs/utils/guid';
-import { Observable, delay } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { ConverterApiService } from './converter-api.service';
 
 @Injectable()
@@ -10,10 +11,8 @@ export class ConverterService {
 
   convertImage(file: File): Observable<ConversionResponseMetadata> {
     const metadata: ConversionRequestMetadata = {
-      fileName: file.name,
       requestId: `${generateUuid()}-${new Date().getTime()}-${file.name}`.split(' ').join('-'),
       targetFormat: 'png',
-      sourceFormat: 'png',
     };
     return this._converterApiService.convertImage(file, metadata).pipe(delay(2000));
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileType } from '@libs/api-interface/api-response.interface';
+import { FileType } from '@libs/api-interface/types/file-type';
 import { AppConfig } from '../types/app-config';
 
 @Injectable({
