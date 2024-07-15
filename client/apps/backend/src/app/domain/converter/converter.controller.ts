@@ -1,8 +1,8 @@
-import { STATIC_STORAGE_CONFIG } from '@backend/core/config/storage.config';
+import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
+import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
 import { Body, Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
-import { ConversionRequestMetadata } from './dto/convert-metadata';
 import { ConverterService } from './services/converter.service';
 import { ConvertableFile } from './types/convertable-file.type';
 
@@ -14,7 +14,7 @@ export class ConverterController {
   @UseInterceptors(FileInterceptor('file'))
   @UsePipes(new ValidationPipe({ transform: true }))
   @HttpCode(HttpStatus.CREATED)
-  async convertImage(@UploadedFile() file: Express.Multer.File, @Body() metadata: ConversionRequestMetadata): Promise<string> {
+  async convertImage(@UploadedFile() file: Express.Multer.File, @Body() metadata: ConversionRequestMetadata): Promise<ConversionResponseMetadata> {
     const convertableFile: ConvertableFile = {
       metadata: {
         fileName: file.originalname,
@@ -25,6 +25,8 @@ export class ConverterController {
 
     const convertedFilePath = await this.converterService.convert(convertableFile);
 
-    return `/${STATIC_STORAGE_CONFIG.staticEndpoint}/${convertedFilePath}`;
+    return {
+      downloadUrl: convertedFilePath,
+    };
   }
 }

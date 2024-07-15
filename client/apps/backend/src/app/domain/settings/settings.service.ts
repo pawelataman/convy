@@ -1,5 +1,5 @@
 import { SettingsRepository } from '@backend/domain/settings/settings.repository';
-import { GetSettingsResponse } from '@libs/api-interface/api-response.interface';
+import { GetSettingsResponse } from '@libs/api-interface/types/get-settings-response';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

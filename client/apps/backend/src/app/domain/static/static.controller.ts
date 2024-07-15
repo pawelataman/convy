@@ -1,5 +1,5 @@
 import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
-import { Controller, Get, Header, HttpCode, HttpStatus, Param, StreamableFile } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Param, StreamableFile } from '@nestjs/common';
 import { StaticService } from './services/static.service';
 
 @Controller('static')
@@ -8,7 +8,6 @@ export class StaticController {
 
   @Get('/:dirName/:fileName')
   @HttpCode(HttpStatus.OK)
-  @Header('Content-Type', 'image/tiff')
   async getStaticFile(@Param('dirName') dirName: string, @Param('fileName') fileName: string): Promise<StreamableFile> {
     const storageUploadInfo: StorageUploadInfo = {
       fileName: fileName,
@@ -16,6 +15,9 @@ export class StaticController {
     };
 
     const fileReadable = await this.staticService.getUploadedFile(storageUploadInfo);
-    return new StreamableFile(fileReadable);
+    return new StreamableFile(fileReadable, {
+      type: 'image/png',
+      disposition: 'attachment; filename="Religion & Spirituality.png"',
+    });
   }
 }

@@ -1,5 +1,8 @@
 import { Observable } from 'rxjs';
-import { ConversionRequestMetadata, ConversionResponseMetadata, FileType, GetSettingsResponse } from './api-response.interface';
+import { ConversionRequestMetadata } from './types/conversion-request-metadata';
+import { ConversionResponseMetadata } from './types/conversion-response-metadata';
+import { FileType } from './types/file-type';
+import { GetSettingsResponse } from './types/get-settings-response';
 
 export interface IConverterGatewayInterface {
   getSettings(): Observable<GetSettingsResponse>;

@@ -1,9 +1,10 @@
 import { normalizeFileName } from '@backend/common/utils/file';
+import { STATIC_STORAGE_CONFIG } from '@backend/core/config/storage.config';
 import { FileStorageService } from '@backend/core/storage/file-storage.service';
+import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
 import { generateUuid } from '@libs/utils/guid';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConvertableFile } from '../types/convertable-file.type';
-import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
 import { ExternalConverterService } from './external-converter.service';
 import { InternalConverterService } from './internal-converter.service';
 
@@ -21,10 +22,17 @@ export class ConverterService {
       fileName: normalizeFileName(convertable.metadata.fileName, convertable.metadata.targetFormat),
       dirName: generateUuid(),
     };
+
+    const path = await this._delegateConversion(convertable, storageUploadInfo, useInternal);
+
+    return `${STATIC_STORAGE_CONFIG.staticEndpoint}/${path}`;
+  }
+
+  private _delegateConversion(convertable: ConvertableFile, storageUploadInfo: StorageUploadInfo, useInternal: boolean) {
     if (useInternal) {
-      return await this._convertInternal(convertable, storageUploadInfo);
+      return this._convertInternal(convertable, storageUploadInfo);
     } else {
-      await this._convertExternal(convertable, storageUploadInfo);
+      return this._convertExternal(convertable, storageUploadInfo);
     }
   }
 
