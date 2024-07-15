@@ -1,3 +1,3 @@
 export class ConversionResponseMetadata {
-  downloadUrl: string;
+  conversionId: string;
 }

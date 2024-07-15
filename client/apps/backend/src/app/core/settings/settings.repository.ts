@@ -1,5 +1,6 @@
 import { DatabaseService } from '@backend/common/database/database.service';
-import { fileType, fileTypeConvertableTo } from '@backend/common/database/schemas';
+import { fileType, fileTypeConvertableTo, mediaType } from '@backend/common/database/schemas';
+import { FileTypeModel } from '@backend/core/settings/models';
 import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
@@ -8,7 +9,7 @@ import { alias } from 'drizzle-orm/pg-core';
 export class SettingsRepository {
   constructor(private readonly dbService: DatabaseService) {}
 
-  getFormatsForFileType(fileTypeId: number) {
+  getFormatsForFileType(fileTypeId: number): Promise<FileTypeModel[]> {
     const convertableTo = alias(fileType, 'convertableTo');
     return this.dbService.dbInstance
       .select({
@@ -21,7 +22,7 @@ export class SettingsRepository {
       .where(eq(fileType.id, fileTypeId));
   }
 
-  getSupportedFormats() {
+  getSupportedFormats(): Promise<FileTypeModel[]> {
     return this.dbService.dbInstance
       .select({
         id: fileType.id,
@@ -31,10 +32,18 @@ export class SettingsRepository {
       .where(eq(fileType.is_supported, true));
   }
 
-  getFileTypeById(targetFormatId: number) {
-    //return this.dbService.dbInstance.select().from(fileType).where(eq(fileType.id, targetFormatId)).limit(1);
+  getFileTypeById(targetFormatId: number): Promise<FileTypeModel> {
     return this.dbService.dbInstance.query.fileType.findFirst({
       where: eq(fileType.id, targetFormatId),
     });
+  }
+
+  async getMediaTypeByFileTypeId(fileTypeId: number): Promise<string> {
+    const [mediaTypeResult] = await this.dbService.dbInstance
+      .select({ name: mediaType.name })
+      .from(mediaType)
+      .rightJoin(fileType, eq(mediaType.id, fileType.media_type_id))
+      .where(eq(fileType.id, fileTypeId));
+    return mediaTypeResult.name;
   }
 }

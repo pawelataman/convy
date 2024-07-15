@@ -5,7 +5,8 @@ import { FileStorageService } from '@backend/core/storage/file-storage.service';
 import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
 import { ConverterRepository } from '@backend/domain/converter/services/converter.repository';
 import { generateUuid } from '@libs/utils/guid';
-import { Injectable } from '@nestjs/common';
+import { Injectable, StreamableFile } from '@nestjs/common';
+import { Readable } from 'stream';
 import { ConvertFileMetadata } from '../types/convertable-file-metadata.type';
 import { InternalConverterService } from './internal-converter.service';
 
@@ -30,9 +31,21 @@ export class ConverterService {
 
     const [savedConversionMetadata] = await this.converterRepository.saveConvertedFileMetadata(
       storagePath,
+      storageUploadInfo.fileName,
       convertFileMetadata.requestId,
       targetFileType.id
     );
     return savedConversionMetadata.id;
+  }
+
+  async getConvertedImage(conversionId: string): Promise<StreamableFile> {
+    const storageInfo = await this.converterRepository.getConvertedFile(conversionId);
+    const mediaTypeNameForFileType = await this.settingsService.getMediaTypeByFileTypeId(storageInfo.fileTypeId);
+    const convertedFileReadable: Readable = await this.storageService.retrieveFile(storageInfo.path);
+
+    return new StreamableFile(convertedFileReadable, {
+      type: mediaTypeNameForFileType,
+      disposition: `attachment; filename="${storageInfo.fileName}"`,
+    });
   }
 }

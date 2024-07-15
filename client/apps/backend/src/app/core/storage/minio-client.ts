@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as Minio from 'minio';
 import { Readable } from 'stream';
 
 @Injectable()
-export class MinioClient {
+export class MinioClient implements OnModuleInit {
   private minioClient: Minio.Client;
   private bucketName: string;
 
@@ -18,6 +18,12 @@ export class MinioClient {
     });
 
     this.bucketName = configService.get('MINIO_DEFAULT_BUCKETS');
+  }
+
+  async onModuleInit() {
+    if (!(await this.minioClient.bucketExists(this.bucketName))) {
+      await this.minioClient.makeBucket(this.bucketName);
+    }
   }
 
   async putObject(objectPath: string, buffer: Buffer): Promise<string> {

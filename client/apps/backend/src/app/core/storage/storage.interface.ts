@@ -4,5 +4,5 @@ import { Readable } from 'stream';
 export interface FileStorage {
   putObject(storageUploadInfo: StorageUploadInfo, buffer: Buffer): Promise<string>;
 
-  retrieveFile(storageUploadInfo: StorageUploadInfo): Promise<Readable>;
+  retrieveFile(filePath: string): Promise<Readable>;
 }

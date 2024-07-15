@@ -5,6 +5,7 @@ import fileType from './file-type.schema';
 const storageInfo = pgTable('storage_info', {
   id: uuid('id').defaultRandom().notNull(),
   path: varchar('storage_path').notNull(),
+  fileName: varchar('filename').notNull(),
   requestId: varchar('request_id').notNull(),
   fileTypeId: integer('file_type_id').references(() => fileType.id),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),

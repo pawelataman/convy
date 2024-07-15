@@ -21,4 +21,8 @@ export class SettingsService {
   async getFileTypeById(targetFormatId: number): Promise<FileTypeModel> {
     return this._settingsRepository.getFileTypeById(targetFormatId);
   }
+
+  async getMediaTypeByFileTypeId(fileTypeId: number) {
+    return this._settingsRepository.getMediaTypeByFileTypeId(fileTypeId);
+  }
 }

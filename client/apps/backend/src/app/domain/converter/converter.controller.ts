@@ -1,6 +1,19 @@
 import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
 import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
-import { Body, Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  StreamableFile,
+  UploadedFile,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
 import { ConverterService } from './services/converter.service';
@@ -22,7 +35,12 @@ export class ConverterController {
     });
 
     return {
-      downloadUrl: convertedFilePath,
+      conversionId: convertedFilePath,
     };
+  }
+
+  @Get('conversion/:conversionId')
+  async getConvertedImage(@Param('conversionId') conversionId: string): Promise<StreamableFile> {
+    return this.converterService.getConvertedImage(conversionId);
   }
 }

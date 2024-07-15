@@ -14,8 +14,8 @@ export class FileStorageService implements FileStorage {
     return filePath;
   }
 
-  async retrieveFile(storageUploadInfo: StorageUploadInfo): Promise<Readable> {
-    return this.minioClient.retrieveFile(this._getFilePath(storageUploadInfo));
+  async retrieveFile(filePath: string): Promise<Readable> {
+    return this.minioClient.retrieveFile(filePath);
   }
 
   private _getFilePath(storageUploadInfo: StorageUploadInfo): string {
