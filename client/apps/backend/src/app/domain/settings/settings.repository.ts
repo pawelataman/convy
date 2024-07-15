@@ -1,7 +1,7 @@
+import { fileType, mediaType } from '@backend/common/database/schema';
 import { DatabaseService } from '@backend/core/storage/database.service';
 import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { fileType, mediaType } from '../../database/schema';
 
 @Injectable()
 export class SettingsRepository {
