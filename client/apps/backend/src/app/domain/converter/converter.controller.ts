@@ -4,7 +4,6 @@ import { Body, Controller, HttpCode, HttpStatus, Post, UploadedFile, UseIntercep
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer';
 import { ConverterService } from './services/converter.service';
-import { ConvertableFile } from './types/convertable-file.type';
 
 @Controller('converter')
 export class ConverterController {
@@ -15,15 +14,12 @@ export class ConverterController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @HttpCode(HttpStatus.CREATED)
   async convertImage(@UploadedFile() file: Express.Multer.File, @Body() metadata: ConversionRequestMetadata): Promise<ConversionResponseMetadata> {
-    const convertableFile: ConvertableFile = {
-      metadata: {
-        fileName: file.originalname,
-        targetFormat: metadata.targetFormat,
-      },
+    const convertedFilePath = await this.converterService.convert({
+      fileName: file.originalname,
       buffer: file.buffer,
-    };
-
-    const convertedFilePath = await this.converterService.convert(convertableFile);
+      targetFormatId: metadata.targetFormatId,
+      requestId: metadata.requestId,
+    });
 
     return {
       downloadUrl: convertedFilePath,

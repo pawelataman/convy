@@ -1,4 +1,5 @@
-import { SettingsRepository } from '@backend/domain/settings/settings.repository';
+import { FileTypeModel } from '@backend/core/settings/models';
+import { SettingsRepository } from '@backend/core/settings/settings.repository';
 import { GetSettingsResponse } from '@libs/api-interface/types/get-settings-response';
 import { Injectable } from '@nestjs/common';
 
@@ -15,5 +16,9 @@ export class SettingsService {
     return {
       supportedFileTypes: supportedFormats,
     };
+  }
+
+  async getFileTypeById(targetFormatId: number): Promise<FileTypeModel> {
+    return this._settingsRepository.getFileTypeById(targetFormatId);
   }
 }

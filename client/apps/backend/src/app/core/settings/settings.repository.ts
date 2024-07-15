@@ -8,7 +8,7 @@ import { alias } from 'drizzle-orm/pg-core';
 export class SettingsRepository {
   constructor(private readonly dbService: DatabaseService) {}
 
-  async getFormatsForFileType(fileTypeId: number) {
+  getFormatsForFileType(fileTypeId: number) {
     const convertableTo = alias(fileType, 'convertableTo');
     return this.dbService.dbInstance
       .select({
@@ -21,7 +21,7 @@ export class SettingsRepository {
       .where(eq(fileType.id, fileTypeId));
   }
 
-  async getSupportedFormats() {
+  getSupportedFormats() {
     return this.dbService.dbInstance
       .select({
         id: fileType.id,
@@ -29,5 +29,12 @@ export class SettingsRepository {
       })
       .from(fileType)
       .where(eq(fileType.is_supported, true));
+  }
+
+  getFileTypeById(targetFormatId: number) {
+    //return this.dbService.dbInstance.select().from(fileType).where(eq(fileType.id, targetFormatId)).limit(1);
+    return this.dbService.dbInstance.query.fileType.findFirst({
+      where: eq(fileType.id, targetFormatId),
+    });
   }
 }

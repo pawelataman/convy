@@ -57,9 +57,11 @@ export class ConverterFileListItemComponent {
 
   downloadFile() {
     if (this._conversionResult()) {
-      this._converterService.downloadImage(this._conversionResult()?.downloadUrl);
+      this._converterService.downloadImage(this._conversionResult()!.downloadUrl);
     }
   }
 
-  fileConversionError() {}
+  fileConversionError() {
+    console.error('Error');
+  }
 }

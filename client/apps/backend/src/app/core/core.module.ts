@@ -1,11 +1,11 @@
 import { DatabaseService } from '@backend/common/database/database.service';
-import { FileStorageService } from '@backend/core/storage/file-storage.service';
-import { MinioClient } from '@backend/core/storage/minio-client';
+import { CoreSettingsModule } from '@backend/core/settings/settings.module';
 import { Global, Module } from '@nestjs/common';
 
 @Global()
 @Module({
-  providers: [MinioClient, FileStorageService, DatabaseService],
-  exports: [FileStorageService, DatabaseService],
+  providers: [DatabaseService],
+  imports: [CoreSettingsModule, CoreModule],
+  exports: [DatabaseService],
 })
 export class CoreModule {}

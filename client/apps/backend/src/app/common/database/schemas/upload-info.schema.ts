@@ -1,13 +1,20 @@
-import { InferSelectModel } from 'drizzle-orm';
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { fileType } from '@backend/common/database/schemas';
+import { relations } from 'drizzle-orm';
+import { integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
-const uploadInfo = pgTable('upload_info', {
+const storageInfo = pgTable('storage_info', {
   id: uuid('id').defaultRandom().notNull(),
-  fileName: varchar('file_name').notNull(),
-  dirName: varchar('dir_name').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
+  path: varchar('storage_path').notNull(),
+  requestId: varchar('request_id').notNull(),
+  fileTypeId: integer('file_type_id').references(() => fileType.id),
+  createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
 });
 
-export default uploadInfo;
+export const storageInfoRelations = relations(storageInfo, ({ one }) => ({
+  fileType: one(fileType, {
+    fields: [storageInfo.fileTypeId],
+    references: [fileType.id],
+  }),
+}));
 
-export type UploadInfoEntity = InferSelectModel<typeof uploadInfo>;
+export default storageInfo;
