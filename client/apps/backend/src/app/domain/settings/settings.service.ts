@@ -1,5 +1,5 @@
-import { SettingsDto } from '@backend/domain/settings/dto/settings.dto';
 import { SettingsRepository } from '@backend/domain/settings/settings.repository';
+import { GetSettingsResponse } from '@libs/api-interface/api-response.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -10,10 +10,10 @@ export class SettingsService {
     return this._settingsRepository.getFormatsForFileType(fileTypeId);
   }
 
-  async getSettings(): Promise<SettingsDto> {
+  async getSettings(): Promise<GetSettingsResponse> {
     const [supportedFormats] = await Promise.all([this._settingsRepository.getSupportedFormats()]);
     return {
-      supportedFormats,
+      supportedFileTypes: supportedFormats,
     };
   }
 }

@@ -28,6 +28,9 @@
       ],
       "@libs/*": [
         "libs/shared/src/lib/*"
+      ],
+      "@frontend/*": [
+        "apps/frontend/*"
       ]
     }
   },

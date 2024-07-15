@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, model, output, signal } from '@angular/core';
+import { ConversionResponseMetadata } from '@libs/api-interface/api-response.interface';
 import { catchError, of } from 'rxjs';
 import { FileSizePipe } from '../../../../core/pipes/file-size.pipe';
 import { FileToUrlPipe } from '../../../../core/pipes/file-to-url.pipe';
 import { ConverterService } from '../../converter.service';
-import { ConversionResult, ConversionStatus, ConvertableFile, ViewType } from '../../converter.types';
+import { ConversionStatus, ConvertableFile, ViewType } from '../../converter.types';
 import { ConverterActionComponent } from '../converter-file-list-item-action/converter-file-list-item-action.component';
 import { ConverterSelectTargetComponent } from '../converter-select-target/converter-select-target.component';
 
@@ -27,7 +28,7 @@ export class ConverterFileListItemComponent {
     status: this._status(),
     file: this.file(),
   }));
-  private _conversionResult = signal<ConversionResult | null>(null);
+  private _conversionResult = signal<ConversionResponseMetadata | null>(null);
 
   constructor(private readonly _converterService: ConverterService) {}
 
@@ -42,7 +43,7 @@ export class ConverterFileListItemComponent {
           return of(error);
         })
       )
-      .subscribe((conversionResult: ConversionResult) => {
+      .subscribe((conversionResult: ConversionResponseMetadata) => {
         this._conversionResult.set(conversionResult);
         this._status.set(ConversionStatus.FINISHED);
       });

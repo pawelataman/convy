@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfigService } from '../../../../core/services/config.service';
+import { ConfigService } from '@frontend/src/app/core/services/config.service';
 
 @Component({
   selector: 'app-converter-select-target',
@@ -16,5 +16,5 @@ export class ConverterSelectTargetComponent {
 
   targetFormat = model(null);
   private _configService = inject(ConfigService);
-  formatOptions = signal(this._configService.supportedTargetFileFormats);
+  formatOptions = signal(this._configService.supportedFileTypes.map((fileType) => fileType.name));
 }

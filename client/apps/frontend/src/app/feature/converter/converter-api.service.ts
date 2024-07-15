@@ -1,24 +1,16 @@
 import { Injectable } from '@angular/core';
+import { ConversionRequestMetadata, ConversionResponseMetadata } from '@libs/api-interface/api-response.interface';
 import { Observable } from 'rxjs';
 import { BaseApiService } from '../../core/api/base-api.service';
 import { environments } from '../../environments/environments';
-import { ConversionRequestMetadata } from './converter.types';
 
 @Injectable()
-export class ConverterApiService extends BaseApiService {
+export class ConverterApiService {
   private readonly _url = `${environments.API_URL}/converter/convert`;
 
-  constructor() {
-    super();
-  }
+  constructor(private readonly _baseApiService: BaseApiService) {}
 
-  convertImage(file: File, metadata: ConversionRequestMetadata): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', new Blob([file]), file.name);
-    formData.append('fileName', metadata.fileName);
-    formData.append('requestId', metadata.requestId);
-    formData.append('sourceFormat', metadata.sourceFormat);
-    formData.append('targetFormat', metadata.targetFormat);
-    return this.http.post(this._url, formData);
+  convertImage(file: Blob, metadata: ConversionRequestMetadata): Observable<ConversionResponseMetadata> {
+    return this._baseApiService.convert(file, metadata);
   }
 }

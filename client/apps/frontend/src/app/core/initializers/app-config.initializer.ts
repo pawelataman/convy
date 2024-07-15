@@ -6,11 +6,10 @@ import { ConfigService } from '../services/config.service';
 
 export function initializeAppConfig(apiService: CoreApiService, configService: ConfigService) {
   return () =>
-    apiService.getAppConfig().pipe(
+    apiService.getAppSettings().pipe(
       tap((config: GetSettingsResponse) => {
         configService.appConfig = {
-          sourceFormats: config.sourceFormats,
-          targetFormats: config.targetFormats,
+          supportedFileTypes: config.supportedFileTypes,
         };
       })
     );

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FileType } from '@libs/api-interface/api-response.interface';
 import { AppConfig } from '../types/app-config';
 
 @Injectable({
@@ -6,19 +7,14 @@ import { AppConfig } from '../types/app-config';
 })
 export class ConfigService {
   private _appConfig: AppConfig = {
-    sourceFormats: [],
-    targetFormats: [],
+    supportedFileTypes: [],
   };
 
   set appConfig(appConfig: AppConfig) {
     this._appConfig = appConfig;
   }
 
-  get supportedSourceFileFormats(): string[] {
-    return this._appConfig.sourceFormats;
-  }
-
-  get supportedTargetFileFormats(): string[] {
-    return this._appConfig.targetFormats;
+  get supportedFileTypes(): FileType[] {
+    return this._appConfig.supportedFileTypes;
   }
 }

@@ -1,4 +1,5 @@
+import { FileType } from '@libs/api-interface/api-response.interface';
+
 export interface AppConfig {
-  sourceFormats: string[];
-  targetFormats: string[];
+  supportedFileTypes: FileType[];
 }

@@ -13,16 +13,3 @@ export enum ConversionStatus {
 }
 
 export type ViewType = 'grid' | 'list';
-
-export interface ConversionRequestMetadata {
-  requestId: string;
-  sourceFormat: string;
-  targetFormat: string;
-  fileName: string;
-}
-
-export interface ConversionResult {
-  requestId: string;
-  fileName: string;
-  url: string;
-}

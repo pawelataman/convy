@@ -1,7 +1,10 @@
-import { FileTypeDTO, GetSettingsResponse } from './api-response.interface';
+import { Observable } from 'rxjs';
+import { ConversionRequestMetadata, ConversionResponseMetadata, FileType, GetSettingsResponse } from './api-response.interface';
 
 export interface IConverterGatewayInterface {
-  getSettings(): Promise<GetSettingsResponse>;
+  getSettings(): Observable<GetSettingsResponse>;
 
-  getFormatsForFileType(fileTypeId: number): Promise<FileTypeDTO[]>;
+  getFormatsForFileType(fileTypeId: number): Observable<FileType[]>;
+
+  convert(file: Blob, metadata: ConversionRequestMetadata): Observable<ConversionResponseMetadata>;
 }

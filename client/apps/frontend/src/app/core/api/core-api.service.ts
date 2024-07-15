@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 import { GetSettingsResponse } from '@libs/api-interface/api-response.interface';
-import { Observable, of } from 'rxjs';
-import { environments } from '../../environments/environments';
+import { Observable } from 'rxjs';
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CoreApiService extends BaseApiService {
-  private readonly _url = `${environments.API_URL}/config`;
+export class CoreApiService {
+  constructor(private readonly _baseApiService: BaseApiService) {}
 
-  constructor() {
-    super();
-  }
-
-  getAppConfig(): Observable<GetSettingsResponse> {
-    return of({ sourceFormats: ['png'], targetFormats: ['png'] });
-    //return this.http.get<GetConfigResponse>(this._url);
+  getAppSettings(): Observable<GetSettingsResponse> {
+    return this._baseApiService.getSettings();
   }
 }
