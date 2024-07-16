@@ -1,4 +1,4 @@
-import { SettingsService } from '@backend/core/settings/settings.service';
+import { SettingsService } from '@backend/src/app/core/settings/settings.service';
 import { IConverterGatewayInterface } from '@libs/api/converter-gateway.interface';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';

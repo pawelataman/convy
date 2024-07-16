@@ -1,5 +1,5 @@
-import { SettingsRepository } from '@backend/core/settings/settings.repository';
-import { SettingsService } from '@backend/core/settings/settings.service';
+import { SettingsRepository } from '@backend/src/app/core/settings/settings.repository';
+import { SettingsService } from '@backend/src/app/core/settings/settings.service';
 import { Module } from '@nestjs/common';
 
 @Module({

@@ -1,4 +1,4 @@
-import { DatabaseService } from '@backend/common/database/database.service';
+import { DatabaseService } from '@backend/src/app/common/database/database.service';
 import { Global, Module } from '@nestjs/common';
 
 @Global()

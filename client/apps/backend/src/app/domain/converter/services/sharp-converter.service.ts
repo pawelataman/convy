@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, UnprocessableEntityException } from '@nestjs/common';
 import sharp from 'sharp';
 
-import { wrapInPromise } from '@backend/common/utils/promise';
+import { wrapInPromise } from '@backend/src/app/common/utils/promise';
 import { ImageFileFormat } from '../types/image-file-format.type';
 
 @Injectable()

@@ -1,9 +1,9 @@
-import { normalizeFileName } from '@backend/common/utils/file';
-import { SettingsService } from '@backend/core/settings/settings.service';
-import { FileTypeModel } from '@backend/core/settings/settings.types';
-import { StorageFileService } from '@backend/core/storage/storage-file.service';
-import { StorageUploadInfo } from '@backend/core/storage/storage.types';
-import { ConverterRepository } from '@backend/domain/converter/services/converter.repository';
+import { normalizeFileName } from '@backend/src/app/common/utils/file';
+import { SettingsService } from '@backend/src/app/core/settings/settings.service';
+import { FileTypeModel } from '@backend/src/app/core/settings/settings.types';
+import { StorageFileService } from '@backend/src/app/core/storage/storage-file.service';
+import { StorageUploadInfo } from '@backend/src/app/core/storage/storage.types';
+import { ConverterRepository } from '@backend/src/app/domain/converter/services/converter.repository';
 import { generateUuid } from '@libs/utils/guid';
 import { Injectable, StreamableFile } from '@nestjs/common';
 import { Readable } from 'stream';

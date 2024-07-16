@@ -1,6 +1,5 @@
-import { fileType, mediaType } from '@backend/common/database/schemas';
-import { fileTypeConvertableTo } from '@backend/common/database/schemas/file-type.schema';
-import { createDbUrl } from '@backend/common/utils/db';
+import { fileType, fileTypeConvertableTo, mediaType } from '@backend/src/app/common/database/schemas';
+import { createDbUrl } from '@backend/src/app/common/utils/db';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { fileConvertableTo } from './file-convertable-to';

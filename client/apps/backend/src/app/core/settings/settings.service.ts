@@ -1,5 +1,5 @@
-import { SettingsRepository } from '@backend/core/settings/settings.repository';
-import { FileTypeModel } from '@backend/core/settings/settings.types';
+import { SettingsRepository } from '@backend/src/app/core/settings/settings.repository';
+import { FileTypeModel } from '@backend/src/app/core/settings/settings.types';
 import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';
 import { Injectable } from '@nestjs/common';
 

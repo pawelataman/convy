@@ -1,5 +1,5 @@
-import { StorageFileService } from '@backend/core/storage/storage-file.service';
-import { MinioClientService } from '@backend/core/storage/storage-minio-client.service';
+import { StorageFileService } from '@backend/src/app/core/storage/storage-file.service';
+import { MinioClientService } from '@backend/src/app/core/storage/storage-minio-client.service';
 import { Module } from '@nestjs/common';
 
 @Module({

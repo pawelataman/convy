@@ -17,14 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@backend/common/*": [
-        "apps/backend/src/app/common/*"
-      ],
-      "@backend/core/*": [
-        "apps/backend/src/app/core/*"
-      ],
-      "@backend/domain/*": [
-        "apps/backend/src/app/domain/*"
+      "@backend/*": [
+        "apps/backend/*"
       ],
       "@frontend/*": [
         "apps/frontend/*"

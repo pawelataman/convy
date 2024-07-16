@@ -1,9 +1,9 @@
-import * as schema from '@backend/common/database/schemas';
-import { createDbUrl } from '@backend/common/utils/db';
+import { createDbUrl } from '@backend/src/app/common/utils/db';
 import { Injectable } from '@nestjs/common';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js/driver';
 import postgres from 'postgres';
+import * as schema from './schemas/index';
 
 @Injectable()
 export class DatabaseService {

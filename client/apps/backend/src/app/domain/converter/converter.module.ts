@@ -1,7 +1,7 @@
-import { CONVERTER_MICROSERVICE_CONFIG } from '@backend/common/config/converter-microservice.config';
-import { CONVERTER_PACKAGE_NAME } from '@backend/common/proto-types/converter_service';
-import { CoreModule } from '@backend/core/core.module';
-import { ConverterRepository } from '@backend/domain/converter/services/converter.repository';
+import { CONVERTER_MICROSERVICE_CONFIG } from '@backend/src/app/common/config/converter-microservice.config';
+import { CONVERTER_PACKAGE_NAME } from '@backend/src/app/common/proto-types/converter_service';
+import { CoreModule } from '@backend/src/app/core/core.module';
+import { ConverterRepository } from '@backend/src/app/domain/converter/services/converter.repository';
 import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { ConverterController } from './converter.controller';
