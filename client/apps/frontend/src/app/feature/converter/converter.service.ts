@@ -15,10 +15,10 @@ export class ConverterService {
       requestId: `${generateUuid()}-${new Date().getTime()}-${file.name}`.split(' ').join('-'),
       targetFormatId: targetFormat.id,
     };
-    return this._converterApiService.convertImage(file, metadata);
+    return this._converterApiService.convert(file, metadata);
   }
 
-  downloadImage(downloadUrl: string) {
-    return this._converterApiService.downloadImage(downloadUrl);
+  downloadImage(conversionId: string): Observable<Blob> {
+    return this._converterApiService.getConvertedImage(conversionId);
   }
 }

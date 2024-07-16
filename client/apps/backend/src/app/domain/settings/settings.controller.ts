@@ -1,21 +1,20 @@
 import { SettingsService } from '@backend/src/app/core/settings/settings.service';
-import { IConverterGatewayInterface } from '@libs/api/converter-gateway.interface';
+import { ISettingsGateway } from '@libs/api/settings-gateway.interface';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { from, Observable } from 'rxjs';
 
 @Controller('settings')
-export class SettingsController implements Partial<IConverterGatewayInterface> {
+export class SettingsController implements ISettingsGateway {
   constructor(private readonly _settingsService: SettingsService) {}
 
   @Get()
-  getSettings(): Observable<ApiGetSettingsResponse> {
-    return from(this._settingsService.getSettings());
+  getSettings(): Promise<ApiGetSettingsResponse> {
+    return this._settingsService.getSettings();
   }
 
   @Get('formats/:fileTypeId')
-  getFormatsForFileType(@Param('fileTypeId', ParseIntPipe) fileTypeId: number): Observable<ApiFileType[]> {
-    return from(this._settingsService.getFormatsForFileType(fileTypeId));
+  getFormatsForFileType(@Param('fileTypeId', ParseIntPipe) fileTypeId: number): Promise<ApiFileType[]> {
+    return this._settingsService.getFormatsForFileType(fileTypeId);
   }
 }

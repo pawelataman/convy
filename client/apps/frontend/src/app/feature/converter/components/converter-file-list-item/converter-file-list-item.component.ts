@@ -3,7 +3,8 @@ import { Component, computed, effect, input, output, signal } from '@angular/cor
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import { ApiFileType } from '@libs/api/types/api-file-type';
-import { catchError, of } from 'rxjs';
+import { saveAs } from 'file-saver';
+import { catchError } from 'rxjs';
 
 import { FileSizePipe } from '@frontend/src/app/core/pipes/file-size.pipe';
 import { FileToUrlPipe } from '@frontend/src/app/core/pipes/file-to-url.pipe';
@@ -47,7 +48,7 @@ export class ConverterFileListItemComponent {
       .pipe(
         catchError((error) => {
           this._status.set(ConversionStatus.ERROR);
-          return of(error);
+          throw error;
         })
       )
       .subscribe((conversionResult: ApiConversionResponseMetadata) => {
@@ -58,7 +59,12 @@ export class ConverterFileListItemComponent {
 
   downloadFile() {
     if (this._conversionResult()) {
-      this._converterService.downloadImage(this._conversionResult()!.conversionId);
+      debugger;
+      this._converterService.downloadImage(this._conversionResult()!.conversionId).subscribe((fileBlob) => {
+        debugger;
+        console.log(fileBlob);
+        saveAs(fileBlob);
+      });
     }
   }
 

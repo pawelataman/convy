@@ -1,12 +1,12 @@
 import { APP_INITIALIZER } from '@angular/core';
+import { SettingsApiService } from '@frontend/src/app/core/api/settings-api.service';
 import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';
 import { tap } from 'rxjs';
-import { CoreApiService } from '../api/core-api.service';
 import { ConfigService } from '../services/config.service';
 
-export function initializeAppConfig(apiService: CoreApiService, configService: ConfigService) {
+export function initializeAppConfig(apiService: SettingsApiService, configService: ConfigService) {
   return () =>
-    apiService.getAppSettings().pipe(
+    apiService.getSettings().pipe(
       tap((config: ApiGetSettingsResponse) => {
         configService.appConfig = {
           supportedFileTypes: config.supportedFileTypes,
@@ -19,5 +19,5 @@ export const APP_CONFIG_INITIALIZER = {
   provide: APP_INITIALIZER,
   useFactory: initializeAppConfig,
   multi: true,
-  deps: [CoreApiService, ConfigService],
+  deps: [SettingsApiService, ConfigService],
 };
