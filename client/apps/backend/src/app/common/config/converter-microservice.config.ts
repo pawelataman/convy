@@ -1,6 +1,6 @@
+import { CONVERTER_PACKAGE_NAME } from '@backend/common/proto-types/converter_service';
 import { ClientOptions, Transport } from '@nestjs/microservices';
 import path from 'node:path';
-import { CONVERTER_PACKAGE_NAME } from '../proto-types/converter_service';
 
 export const CONVERTER_MICROSERVICE_CONFIG: ClientOptions = {
   transport: Transport.GRPC,

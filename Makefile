@@ -1,5 +1,5 @@
 PROTO_DIR = _proto
-API_GATEWAY_PROTO_PATH = client/apps/backend/src/app/core/proto-types
+API_GATEWAY_PROTO_PATH = client/apps/backend/src/app/common/proto-types
 CONVERTER_SERVICE_PROTO_PATH = converter/pb
 
 proto-go-gen:

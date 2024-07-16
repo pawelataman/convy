@@ -1,5 +1,5 @@
-import { StorageUploadInfo } from './storage-upload.type';
 import { Readable } from 'stream';
+import { StorageUploadInfo } from './storage.types';
 
 export interface FileStorage {
   putObject(storageUploadInfo: StorageUploadInfo, buffer: Buffer): Promise<string>;

@@ -1,5 +1,6 @@
-import { CONVERTER_MICROSERVICE_CONFIG } from '@backend/core/config/converter-microservice.config';
-import { CONVERTER_PACKAGE_NAME } from '@backend/core/proto-types/converter_service';
+import { CONVERTER_MICROSERVICE_CONFIG } from '@backend/common/config/converter-microservice.config';
+import { CONVERTER_PACKAGE_NAME } from '@backend/common/proto-types/converter_service';
+import { CoreModule } from '@backend/core/core.module';
 import { ConverterRepository } from '@backend/domain/converter/services/converter.repository';
 import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
@@ -12,7 +13,7 @@ import { SharpConverterService } from './services/sharp-converter.service';
 
 @Module({
   controllers: [ConverterController],
-  imports: [ClientsModule.register([{ name: CONVERTER_PACKAGE_NAME, ...CONVERTER_MICROSERVICE_CONFIG }])],
+  imports: [ClientsModule.register([{ name: CONVERTER_PACKAGE_NAME, ...CONVERTER_MICROSERVICE_CONFIG }]), CoreModule],
   providers: [ConverterService, ExternalConverterService, InternalConverterService, FileWriterService, SharpConverterService, ConverterRepository],
 })
 export class ConverterModule {}

@@ -1,12 +1,12 @@
-import { MinioClient } from '@backend/core/storage/minio-client';
+import { MinioClientService } from '@backend/core/storage/storage-minio-client.service';
 import { FileStorage } from '@backend/core/storage/storage.interface';
 import { Injectable } from '@nestjs/common';
 import { Readable } from 'stream';
-import { StorageUploadInfo } from './storage-upload.type';
+import { StorageUploadInfo } from './storage.types';
 
 @Injectable()
-export class FileStorageService implements FileStorage {
-  constructor(private readonly minioClient: MinioClient) {}
+export class StorageFileService implements FileStorage {
+  constructor(private readonly minioClient: MinioClientService) {}
 
   async putObject(storageUploadInfo: StorageUploadInfo, buffer: Buffer): Promise<string> {
     const filePath = this._getFilePath(storageUploadInfo);

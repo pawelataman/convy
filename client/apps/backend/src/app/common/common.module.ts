@@ -6,4 +6,4 @@ import { Global, Module } from '@nestjs/common';
   providers: [DatabaseService],
   exports: [DatabaseService],
 })
-export class DatabaseModule {}
+export class CommonModule {}

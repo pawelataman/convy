@@ -1,8 +1,8 @@
 import { normalizeFileName } from '@backend/common/utils/file';
-import { FileTypeModel } from '@backend/core/settings/models';
 import { SettingsService } from '@backend/core/settings/settings.service';
-import { FileStorageService } from '@backend/core/storage/file-storage.service';
-import { StorageUploadInfo } from '@backend/core/storage/storage-upload.type';
+import { FileTypeModel } from '@backend/core/settings/settings.types';
+import { StorageFileService } from '@backend/core/storage/storage-file.service';
+import { StorageUploadInfo } from '@backend/core/storage/storage.types';
 import { ConverterRepository } from '@backend/domain/converter/services/converter.repository';
 import { generateUuid } from '@libs/utils/guid';
 import { Injectable, StreamableFile } from '@nestjs/common';
@@ -14,7 +14,7 @@ import { InternalConverterService } from './internal-converter.service';
 export class ConverterService {
   constructor(
     private readonly internalConverterService: InternalConverterService,
-    private readonly storageService: FileStorageService,
+    private readonly storageService: StorageFileService,
     private readonly settingsService: SettingsService,
     private readonly converterRepository: ConverterRepository
   ) {}

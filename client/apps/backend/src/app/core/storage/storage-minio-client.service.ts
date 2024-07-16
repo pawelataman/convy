@@ -4,7 +4,7 @@ import * as Minio from 'minio';
 import { Readable } from 'stream';
 
 @Injectable()
-export class MinioClient implements OnModuleInit {
+export class MinioClientService implements OnModuleInit {
   private minioClient: Minio.Client;
   private bucketName: string;
 

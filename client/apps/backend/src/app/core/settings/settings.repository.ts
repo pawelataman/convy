@@ -1,6 +1,6 @@
 import { DatabaseService } from '@backend/common/database/database.service';
 import { fileType, fileTypeConvertableTo, mediaType } from '@backend/common/database/schemas';
-import { FileTypeModel } from '@backend/core/settings/models';
+import { FileTypeModel } from '@backend/core/settings/settings.types';
 import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
