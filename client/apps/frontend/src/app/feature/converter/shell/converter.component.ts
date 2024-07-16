@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs';
-import { ConfigService } from '../../../core/services/config.service';
-import { FileService } from '../../../core/services/file.service';
-import { PlatformService } from '../../../core/services/platform.service';
-import { extractFileFormat } from '../../../core/utils/file';
-import { generateUUid } from '../../../core/utils/uuid';
+
+import { ConfigService } from '@frontend/src/app/core/services/config.service';
+import { FileService } from '@frontend/src/app/core/services/file.service';
+import { PlatformService } from '@frontend/src/app/core/services/platform.service';
+import { extractFileFormat } from '@frontend/src/app/core/utils/file';
+import { generateUuid } from '@libs/utils/guid';
 import { ConverterFileListComponent } from '../components/converter-file-list/converter-file-list.component';
 import { ConverterApiService } from '../converter-api.service';
 import { ConverterService } from '../converter.service';
@@ -74,7 +75,7 @@ export class ConverterComponent implements OnInit {
   private _createNewConvertableFile(file: File): ConvertableFile {
     return {
       file,
-      id: generateUUid(),
+      id: generateUuid(),
       format: extractFileFormat(file),
     };
   }

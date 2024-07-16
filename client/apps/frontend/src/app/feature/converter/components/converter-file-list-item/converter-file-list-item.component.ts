@@ -4,8 +4,9 @@ import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { catchError, of } from 'rxjs';
-import { FileSizePipe } from '../../../../core/pipes/file-size.pipe';
-import { FileToUrlPipe } from '../../../../core/pipes/file-to-url.pipe';
+
+import { FileSizePipe } from '@frontend/src/app/core/pipes/file-size.pipe';
+import { FileToUrlPipe } from '@frontend/src/app/core/pipes/file-to-url.pipe';
 import { ConverterService } from '../../converter.service';
 import { ConversionStatus, ConvertableFile, ViewType } from '../../converter.types';
 import { ConverterActionComponent } from '../converter-file-list-item-action/converter-file-list-item-action.component';
@@ -57,7 +58,7 @@ export class ConverterFileListItemComponent {
 
   downloadFile() {
     if (this._conversionResult()) {
-      this._converterService.downloadImage(this._conversionResult()!.downloadUrl);
+      this._converterService.downloadImage(this._conversionResult()!.conversionId);
     }
   }
 
