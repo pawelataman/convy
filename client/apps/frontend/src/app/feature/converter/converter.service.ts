@@ -18,7 +18,7 @@ export class ConverterService {
     return this._converterApiService.convert(file, metadata);
   }
 
-  downloadImage(conversionId: string): Observable<Blob> {
-    return this._converterApiService.getConvertedImage(conversionId);
+  downloadImage(downloadUrl: string) {
+    return this._converterApiService.getConvertedImage(downloadUrl);
   }
 }
