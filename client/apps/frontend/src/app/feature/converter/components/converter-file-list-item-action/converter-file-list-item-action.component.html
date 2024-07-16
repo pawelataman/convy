@@ -1,11 +1,9 @@
 @if (vm(); as vm) {
 
 <div class="flex flex-row">
-  @switch (vm.status) { @case (ConversionStatus.FINISHED) {
-  <a [href]="vm.downloadLink" download class="flex gap-2 ml-4 bg-blue-500 text-white px-4 py-2 rounded">Download</a>
-  } @case (ConversionStatus.READY_TO_CONVERT) {
-  <button (click)="convert.emit()" class="flex gap-2 ml-4 bg-green-500 text-white px-4 py-2 rounded" type="button">Convert</button>
-  } @case (ConversionStatus.CONVERTING) {
+  @if (vm.downloadLink) {
+  <a [href]="vm.downloadLink" target="_parent" download class="flex gap-2 ml-4 bg-blue-500 text-white px-4 py-2 rounded">Download</a>
+  } @else if (vm.isLoading) {
   <button disabled class="flex gap-2 ml-4 bg-orange-500 text-white px-4 py-2 rounded" type="button">
     Converting
     <div role="status">
@@ -28,8 +26,8 @@
       <span class="sr-only">Loading...</span>
     </div>
   </button>
-  } @case (ConversionStatus.ERROR) {
-  <button class="flex gap-2 ml-4 red text-white px-4 py-2 rounded" type="button">Error</button>
-  } }
+  } @else {
+  <button (click)="convert.emit()" class="flex gap-2 ml-4 bg-green-500 text-white px-4 py-2 rounded" type="button">Convert</button>
+  }
 </div>
 }

@@ -6,8 +6,8 @@
     <span>{{ vm().file.file.name }}</span>
   </div>
   <div class="flex items-center gap-4">
-    <app-converter-select-target [(targetFormat)]="targetFormat" />
-    <span class="text-gray-400">{{ file().file.size | fileSize }}</span>
+    <app-converter-select-target [targetFormat]="vm().currentTargetFormat" (targetFormatChange)="targetFormatChange($event)" />
+    <span class="text-gray-400">{{ vm().file.file.size | fileSize }}</span>
     <div>
       <span class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
     </div>

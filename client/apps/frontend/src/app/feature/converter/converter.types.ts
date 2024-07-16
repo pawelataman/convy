@@ -5,13 +5,6 @@ export interface ConvertableFile {
   targetFormat?: string;
 }
 
-export enum ConversionStatus {
-  READY_TO_CONVERT = 'ready_to_convert',
-  CONVERTING = 'converting',
-  FINISHED = 'finished',
-  ERROR = 'error',
-}
-
 export type ViewType = 'grid' | 'list';
 
 export type FileListItemActionType = 'download' | 'convert';

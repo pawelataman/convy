@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { FileSizePipe } from '@frontend/src/app/core/pipes/file-size.pipe';
 import { FileToUrlPipe } from '@frontend/src/app/core/pipes/file-to-url.pipe';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
@@ -20,15 +20,21 @@ export class ConverterFileListItemComponent {
   viewType = input<ViewType>('list');
   file = input.required<ConvertableFile>();
   removeItem = output<string>();
-  targetFormat = signal<ApiFileType>(this._configService.supportedFileTypes[0]);
   vm = computed(() => ({
     viewType: this.viewType(),
     file: this.file(),
+    currentTargetFormat: this._fileListItemService.fileListItemState().currentTargetFormat,
   }));
 
   constructor(private readonly _fileListItemService: FileListItemService, private readonly _configService: ConfigService) {}
 
   convertFile() {
-    this._fileListItemService.convertFile(this.file(), this.targetFormat());
+    this._fileListItemService.convertFile(this.file());
+  }
+
+  targetFormatChange(targetFormat: ApiFileType | null | undefined) {
+    if (targetFormat) {
+      this._fileListItemService.setTargetFormat(targetFormat);
+    }
   }
 }

@@ -2,71 +2,92 @@ import { Injectable, signal } from '@angular/core';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { environments } from '@frontend/src/app/environments/environments';
 import { ConverterService } from '@frontend/src/app/feature/converter/converter.service';
-import { ConversionStatus, ConvertableFile } from '@frontend/src/app/feature/converter/converter.types';
+import { ConvertableFile } from '@frontend/src/app/feature/converter/converter.types';
 import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { catchError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 
 @UntilDestroy()
 @Injectable()
 export class FileListItemService {
-  fileListState = signal<FileListItemState>(initialState);
+  fileListItemState = signal<FileListItemState>({
+    loading: false,
+    conversionResult: {},
+    convertableFile: null,
+    currentTargetFormat: this._configService.supportedFileTypes[0],
+    currentLink: '',
+  });
 
-  constructor(private readonly _converterService: ConverterService, private readonly _configService: ConfigService) {}
+  constructor(private readonly _converterService: ConverterService, private readonly _configService: ConfigService) {
+    this._updateCurrentLink();
+  }
 
-  convertFile(convertableFile: ConvertableFile, targetFormat: ApiFileType): void {
-    this.setStatus(ConversionStatus.CONVERTING);
+  convertFile(convertableFile: ConvertableFile): void {
+    this.setLoading(true);
 
+    const targetFormat = this.fileListItemState().currentTargetFormat;
     this._converterService
       .convertImage(convertableFile.file, targetFormat)
       .pipe(
         untilDestroyed(this),
         catchError((error) => {
-          this.setStatus(ConversionStatus.ERROR);
           throw error;
-        })
+        }),
+        finalize(() => this.setLoading(false))
       )
       .subscribe((conversionResult: ApiConversionResponseMetadata) => {
-        this.setConversionResult(conversionResult);
-        this.setStatus(ConversionStatus.FINISHED);
+        this.setConversionResult(conversionResult, targetFormat);
       });
   }
 
-  setStatus(status: ConversionStatus) {
-    this.fileListState.update((state) => ({ ...state, status }));
+  setLoading(loading: boolean) {
+    this.fileListItemState.update((state) => ({ ...state, loading }));
   }
 
-  setConversionResult(conversionResult: ApiConversionResponseMetadata) {
-    this.fileListState.update((state) => ({ ...state, conversionResult }));
+  setConversionResult(conversionResult: ApiConversionResponseMetadata, targetFormat: ApiFileType): void {
+    this.fileListItemState.update((state) => ({
+      ...state,
+      conversionResult: {
+        ...state.conversionResult,
+        [targetFormat.id]: conversionResult,
+      },
+    }));
+
+    this._updateCurrentLink();
   }
 
-  getDownloadLink(conversionId?: string): string {
-    return `${environments.API_URL}/converter/conversion/${conversionId}`;
+  setTargetFormat(targetFormat: ApiFileType) {
+    this.fileListItemState.update((state) => ({
+      ...state,
+      currentTargetFormat: targetFormat,
+    }));
+
+    console.log('new target format', targetFormat);
+
+    this._updateCurrentLink();
   }
 
-  getActionLabel(status: ConversionStatus): string {
-    switch (status) {
-      case ConversionStatus.READY_TO_CONVERT:
-        return 'Convert';
-      case ConversionStatus.FINISHED:
-        return 'Download';
-      case ConversionStatus.ERROR:
-        return 'Error';
-      case ConversionStatus.CONVERTING:
-        return 'Converting';
-    }
+  private _updateCurrentLink() {
+    const currentTarget = this.fileListItemState().currentTargetFormat;
+    const conversionResult = this.fileListItemState().conversionResult;
+
+    const currentLink =
+      currentTarget && conversionResult[currentTarget.id]
+        ? `${environments.API_URL}/converter/conversion/${conversionResult[currentTarget.id].conversionId}`
+        : '';
+
+    this.fileListItemState.update((state) => ({
+      ...state,
+      currentLink,
+    }));
   }
 }
 
 interface FileListItemState {
-  status: ConversionStatus;
-  conversionResult: ApiConversionResponseMetadata | null;
+  loading: boolean;
+  conversionResult: { [targetId: number]: ApiConversionResponseMetadata };
   convertableFile: ConvertableFile | null;
+  currentTargetFormat: ApiFileType;
+  currentLink: string;
 }
-
-const initialState: FileListItemState = {
-  status: ConversionStatus.READY_TO_CONVERT,
-  conversionResult: null,
-  convertableFile: null,
-};
