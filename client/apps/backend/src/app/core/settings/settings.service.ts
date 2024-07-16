@@ -1,6 +1,6 @@
 import { SettingsRepository } from '@backend/core/settings/settings.repository';
 import { FileTypeModel } from '@backend/core/settings/settings.types';
-import { GetSettingsResponse } from '@libs/api-interface/types/get-settings-response';
+import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class SettingsService {
     return this._settingsRepository.getFormatsForFileType(fileTypeId);
   }
 
-  async getSettings(): Promise<GetSettingsResponse> {
+  async getSettings(): Promise<ApiGetSettingsResponse> {
     const [supportedFormats] = await Promise.all([this._settingsRepository.getSupportedFormats()]);
     return {
       supportedFileTypes: supportedFormats,

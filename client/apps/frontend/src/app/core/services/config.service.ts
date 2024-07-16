@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileType } from '@libs/api-interface/types/file-type';
+import { ApiFileType } from '@libs/api/types/api-file-type';
 import { AppConfig } from '../types/app-config';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class ConfigService {
     this._appConfig = appConfig;
   }
 
-  get supportedFileTypes(): FileType[] {
+  get supportedFileTypes(): ApiFileType[] {
     return this._appConfig.supportedFileTypes;
   }
 }

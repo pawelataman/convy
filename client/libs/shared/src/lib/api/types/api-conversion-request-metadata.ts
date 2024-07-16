@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class ConversionRequestMetadata {
+export class ApiConversionRequestMetadata {
   @IsNotEmpty()
   requestId: string;
 

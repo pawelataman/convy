@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, input, output, signal } from '@angular/core';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
-import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
-import { FileType } from '@libs/api-interface/types/file-type';
+import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
+import { ApiFileType } from '@libs/api/types/api-file-type';
 import { catchError, of } from 'rxjs';
 import { FileSizePipe } from '../../../../core/pipes/file-size.pipe';
 import { FileToUrlPipe } from '../../../../core/pipes/file-to-url.pipe';
@@ -21,7 +21,7 @@ export class ConverterFileListItemComponent {
   viewType = input<ViewType>('list');
   file = input.required<ConvertableFile>();
   removeItem = output<string>();
-  targetFormat = signal<FileType>(this._configService.supportedFileTypes[0]);
+  targetFormat = signal<ApiFileType>(this._configService.supportedFileTypes[0]);
   private _status = signal<ConversionStatus>(ConversionStatus.READY_TO_CONVERT);
   vm = computed(() => ({
     isActionDisabled: this._status() !== ConversionStatus.READY_TO_CONVERT,
@@ -30,7 +30,7 @@ export class ConverterFileListItemComponent {
     status: this._status(),
     file: this.file(),
   }));
-  private _conversionResult = signal<ConversionResponseMetadata | null>(null);
+  private _conversionResult = signal<ApiConversionResponseMetadata | null>(null);
 
   constructor(private readonly _converterService: ConverterService, private readonly _configService: ConfigService) {
     effect(() => {
@@ -49,7 +49,7 @@ export class ConverterFileListItemComponent {
           return of(error);
         })
       )
-      .subscribe((conversionResult: ConversionResponseMetadata) => {
+      .subscribe((conversionResult: ApiConversionResponseMetadata) => {
         this._conversionResult.set(conversionResult);
         this._status.set(ConversionStatus.FINISHED);
       });

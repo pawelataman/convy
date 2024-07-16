@@ -1,5 +1,5 @@
-import { ConversionRequestMetadata } from '@libs/api-interface/types/conversion-request-metadata';
-import { ConversionResponseMetadata } from '@libs/api-interface/types/conversion-response-metadata';
+import { ApiConversionRequestMetadata } from '@libs/api/types/api-conversion-request-metadata';
+import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import {
   Body,
   Controller,
@@ -26,7 +26,10 @@ export class ConverterController {
   @UseInterceptors(FileInterceptor('file'))
   @UsePipes(new ValidationPipe({ transform: true }))
   @HttpCode(HttpStatus.CREATED)
-  async convertImage(@UploadedFile() file: Express.Multer.File, @Body() metadata: ConversionRequestMetadata): Promise<ConversionResponseMetadata> {
+  async convertImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() metadata: ApiConversionRequestMetadata
+  ): Promise<ApiConversionResponseMetadata> {
     const convertedFilePath = await this.converterService.convert({
       fileName: file.originalname,
       buffer: file.buffer,
