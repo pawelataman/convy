@@ -2,7 +2,7 @@
 
 <div class="flex items-center justify-between border-[1px] rounded-md w-full my-2 h-16 pr-4">
   <div class="flex items-center h-16 gap-4">
-    <img [src]="vm().file.file | fileToUrl" class="h-full" />
+    <img [src]="vm().file.file | fileToUrl" class="h-full" alt="Image to convert" />
     <span>{{ vm().file.file.name }}</span>
   </div>
   <div class="flex items-center gap-4">
@@ -16,7 +16,7 @@
 </div>
 } @else if (viewType() === "grid") {
 <div class="w-full h-80 overflow-clip relative">
-  <img [src]="vm().file.file | fileToUrl" alt="Image" class="h-full w-full object-cover" />
+  <img [src]="vm().file.file | fileToUrl" alt="Image to convert" class="h-full w-full object-cover" />
   <div class="absolute inset-0 flex justify-center items-center">
     <div class="flex flex-row justify-between items-center absolute top-0 w-full px-4 py-2 bg-gray-100 bg-opacity-80">
       <span class="px-2 py-0.5 text-center bg-green-500 text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
