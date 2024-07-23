@@ -1,33 +1,19 @@
-<div class="py-12">
+<div class="py-12 bg-black">
   <div class="flex flex-col mx-12">
     <div class="w-96 self-center">
       <label
-        class="flex flex-col items-center justify-center h-64 border-2 border-emerald-400 border-dashed rounded-lg cursor-pointer bg-green-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-green-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        class="flex flex-col items-center justify-center h-64 border-2 border-grey-400 border-dashed rounded-lg cursor-pointer bg-grey-50 hover:bg-gray-800"
         for="dropzone-file"
       >
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-          <svg
-            aria-hidden="true"
-            class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-            fill="none"
-            viewBox="0 0 20 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            />
-          </svg>
-          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span class="font-semibold text-green-500">Click to upload</span>
+          <i class="ph-bold ph-cloud-arrow-up text-4xl text-white"></i>
+          <p class="mb-2 text-sm text-gray-500">
+            <span class="font-semibold text-white">Click to upload</span>
             or
-            <span class="font-semibold text-green-500">drag and drop</span>
+            <span class="font-semibold text-white">drag and drop</span>
           </p>
-          <p class="text-s text-gray-500 dark:text-gray-400">SVG, PNG, JPG and other</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Check supported formats <a class="font-bold text-green-500 hover:underline">here</a></p>
+          <p class="text-s text-gray-500">SVG, PNG, JPG and other</p>
+          <p class="text-xs text-gray-500">Check supported formats <a class="font-bold text-white hover:underline">here</a></p>
         </div>
         <input (change)="onFileChange($event)" [accept]="acceptedFormats()" class="hidden" id="dropzone-file" multiple type="file" />
       </label>

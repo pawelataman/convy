@@ -31,7 +31,7 @@
           }
         ],
         "styles": [
-          "apps/frontend/src/styles.scss"
+          "apps/frontend/src/styles/styles.scss"
         ],
         "scripts": [],
         "polyfills": [
