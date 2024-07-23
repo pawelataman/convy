@@ -5,6 +5,4 @@ export interface ConvertableFile {
   targetFormat?: string;
 }
 
-export type ViewType = 'grid' | 'list';
-
 export type FileListItemActionType = 'download' | 'convert';

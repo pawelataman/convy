@@ -5,7 +5,7 @@ import { FileToUrlPipe } from '@frontend/src/app/core/pipes/file-to-url.pipe';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { FileListItemService } from '@frontend/src/app/feature/converter/components/converter-file-list-item/file-list-item.service';
 import { ApiFileType } from '@libs/api/types/api-file-type';
-import { ConvertableFile, ViewType } from '../../converter.types';
+import { ConvertableFile } from '../../converter.types';
 import { ConverterActionComponent } from '../converter-file-list-item-action/converter-file-list-item-action.component';
 import { ConverterSelectTargetComponent } from '../converter-select-target/converter-select-target.component';
 
@@ -17,11 +17,9 @@ import { ConverterSelectTargetComponent } from '../converter-select-target/conve
   providers: [FileListItemService],
 })
 export class ConverterFileListItemComponent {
-  viewType = input<ViewType>('list');
   file = input.required<ConvertableFile>();
   removeItem = output<string>();
   vm = computed(() => ({
-    viewType: this.viewType(),
     file: this.file(),
     currentTargetFormat: this._fileListItemService.fileListItemState().currentTargetFormat,
   }));

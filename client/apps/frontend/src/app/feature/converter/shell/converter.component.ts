@@ -6,6 +6,7 @@ import { take } from 'rxjs';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { FileService } from '@frontend/src/app/core/services/file.service';
 import { PlatformService } from '@frontend/src/app/core/services/platform.service';
+import { GlobalRoutePaths } from '@frontend/src/app/core/types/global-paths';
 import { extractFileFormat } from '@frontend/src/app/core/utils/file';
 import { generateUuid } from '@libs/utils/guid';
 import { ConverterFileListComponent } from '../components/converter-file-list/converter-file-list.component';
@@ -24,6 +25,7 @@ import { ConvertableFile } from '../converter.types';
 export class ConverterComponent implements OnInit {
   convertableFiles = signal<ConvertableFile[]>([]);
   acceptedFormats = signal<string>('');
+  protected readonly GlobalRoutePaths = GlobalRoutePaths;
 
   constructor(
     private readonly _configService: ConfigService,
