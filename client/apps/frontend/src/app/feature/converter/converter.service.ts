@@ -3,11 +3,15 @@ import { ApiConversionRequestMetadata } from '@libs/api/types/api-conversion-req
 import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { generateUuid } from '@libs/utils/guid';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ConverterApiService } from './converter-api.service';
 
 @Injectable()
 export class ConverterService {
+  events$ = {
+    convertEvent: new Subject<ApiFileType>(),
+  };
+
   constructor(private readonly _converterApiService: ConverterApiService) {}
 
   convertImage(file: File, targetFormat: ApiFileType): Observable<ApiConversionResponseMetadata> {

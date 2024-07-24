@@ -1,58 +1,47 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { take } from 'rxjs';
-
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
-import { FileService } from '@frontend/src/app/core/services/file.service';
-import { PlatformService } from '@frontend/src/app/core/services/platform.service';
-import { GlobalRoutePaths } from '@frontend/src/app/core/types/global-paths';
 import { extractFileFormat } from '@frontend/src/app/core/utils/file';
+import { ConverterSelectTargetComponent } from '@frontend/src/app/feature/converter/components/converter-select-target/converter-select-target.component';
+import { ConverterApiService } from '@frontend/src/app/feature/converter/converter-api.service';
+import { ConverterStore } from '@frontend/src/app/feature/converter/converter.store';
 import { generateUuid } from '@libs/utils/guid';
 import { ConverterFileListComponent } from '../components/converter-file-list/converter-file-list.component';
-import { ConverterApiService } from '../converter-api.service';
 import { ConverterService } from '../converter.service';
 import { ConvertableFile } from '../converter.types';
 
 @Component({
   selector: 'app-converter',
   standalone: true,
-  providers: [ConverterService, ConverterApiService],
-  imports: [CommonModule, FormsModule, ConverterFileListComponent],
+  providers: [ConverterService, ConverterApiService, ConverterStore],
+  imports: [CommonModule, FormsModule, ConverterFileListComponent, ConverterSelectTargetComponent],
   templateUrl: './converter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConverterComponent implements OnInit {
-  convertableFiles = signal<ConvertableFile[]>([]);
   acceptedFormats = signal<string>('');
-  protected readonly GlobalRoutePaths = GlobalRoutePaths;
+  vm = computed(() => ({
+    convertableFiles: this._converterStore.files(),
+    targetFormat: this._converterStore.targetFormat(),
+  }));
 
-  constructor(
-    private readonly _configService: ConfigService,
-    private readonly _fileService: FileService,
-    private readonly _platformService: PlatformService,
-    private readonly _converterService: ConverterService
-  ) {
-    //  effect(() => console.log(this.convertableFiles()));
-  }
+  constructor(private readonly _configService: ConfigService, private readonly _converterStore: ConverterStore) {}
 
   onFileChange($event: Event): void {
     const input: HTMLInputElement = $event.target as HTMLInputElement;
     const files: FileList | null = input.files;
 
     if (files) {
-      this.convertableFiles.set([...this.convertableFiles(), ...Array.from(files).map(this._createNewConvertableFile.bind(this))]);
+      this._converterStore.setConverterFiles(Array.from(files).map(this._createNewConvertableFile.bind(this)));
     }
   }
 
   onRemoveItem(id: string): void {
-    const afterRemoved = this.convertableFiles().filter((file) => file.id !== id);
-    this.convertableFiles.set(afterRemoved);
+    this._converterStore.deleteFileById(id);
   }
 
   ngOnInit(): void {
     this._constructAcceptedFormatString();
-    // this._fetchImagesFromAssets();
   }
 
   private _constructAcceptedFormatString(): void {
@@ -60,18 +49,6 @@ export class ConverterComponent implements OnInit {
 
     const acceptedFormatsStr = supportedFileTypes.map((supportedFileType) => `image/${supportedFileType.name}`).join(',');
     this.acceptedFormats.set(acceptedFormatsStr);
-  }
-
-  private _fetchImagesFromAssets(): void {
-    if (this._platformService.isServer()) {
-      return;
-    }
-    this._fileService
-      .getFilesFromAssets()
-      .pipe(take(1))
-      .subscribe((files: File[]) => {
-        this.convertableFiles.set(files.map((file) => this._createNewConvertableFile(file)));
-      });
   }
 
   private _createNewConvertableFile(file: File): ConvertableFile {

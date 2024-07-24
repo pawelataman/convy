@@ -4,5 +4,3 @@ export interface ConvertableFile {
   format: string;
   targetFormat?: string;
 }
-
-export type FileListItemActionType = 'download' | 'convert';

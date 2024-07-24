@@ -1,10 +1,10 @@
 <div class="w-full h-64 overflow-clip relative">
   <img [src]="vm().file.file | fileToUrl" alt="Image to convert" class="h-full w-full object-cover" />
   <div class="absolute inset-0 flex justify-center items-center">
-    <div class="flex flex-row justify-between items-center absolute top-0 w-full px-4 py-2 bg-black border-[1px] border-b-0">
+    <div class="flex flex-row justify-between items-center absolute top-0 w-full px-4 py-2 bg-black/20">
       <span class="px-2 py-0.5 text-center bg-transparent border-[1px] text-white rounded-md text-xs">{{ vm().file.format | uppercase }}</span>
       <div class="flex flex-row gap-4">
-        <i (click)="removeItem.emit(file().id)" class="ph-bold ph-trash text-white text-2xl"></i>
+        <i (click)="removeItem.emit(file().id)" class="ph-bold ph-trash text-white text-2xl hover:cursor-pointer"></i>
       </div>
     </div>
   </div>

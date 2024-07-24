@@ -21,9 +21,19 @@
       </label>
     </div>
 
-    @if (convertableFiles().length) {
+    <div class="w-full flex flex-row justify-center mt-6">
+      <div class="flex flex-row items-end justify-between gap-4 w-96">
+        <app-converter-select-target />
+
+        @if (vm().convertableFiles.length) {
+        <button class="text-black text-lg border-[1px] bg-white px-4 py-2 rounded-md">Convert all <i class="ph-bold ph-arrow-right ml-2"></i></button>
+        }
+      </div>
+    </div>
+
+    @if (vm().convertableFiles.length) {
     <div class="mt-8">
-      <app-converter-file-list (removeItem)="onRemoveItem($event)" [files]="convertableFiles()" />
+      <app-converter-file-list (removeItem)="onRemoveItem($event)" [files]="vm().convertableFiles" />
     </div>
     }
   </div>

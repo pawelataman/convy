@@ -1,10 +1,11 @@
-<div class="text-gray-400">
+<div class="max-w-sm mx-auto">
   <select
-    [(ngModel)]="targetFormat"
-    class="border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    (ngModelChange)="targetFormatChange($event)"
+    [ngModel]="vm().targetFormat"
+    class="bg-black border border-white text-white text-lg rounded-lg focus:ring-blue-500 block w-full p-2.5"
   >
     @for (formatOption of formatOptions(); track formatOption) {
-      <option [ngValue]="formatOption">{{ formatOption.name | uppercase }}</option>
+    <option class="text-white" [ngValue]="formatOption">{{ formatOption.name | uppercase }}</option>
     }
   </select>
 </div>
