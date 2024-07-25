@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FileListItemStore } from '@frontend/src/app/feature/converter/components/converter-file-list-item/file-list-item.store';
-import { ConverterService } from '@frontend/src/app/feature/converter/converter.service';
 import { ConvertableFile } from '@frontend/src/app/feature/converter/converter.types';
+import { ConverterService } from '@frontend/src/app/feature/converter/services/converter.service';
 import { ApiConversionResponseMetadata } from '@libs/api/types/api-conversion-response-metadata';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';

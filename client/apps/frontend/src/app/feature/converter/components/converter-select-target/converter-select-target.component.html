@@ -1,11 +1,20 @@
-<div class="max-w-sm mx-auto">
-  <select
-    (ngModelChange)="targetFormatChange($event)"
-    [ngModel]="vm().targetFormat"
-    class="bg-black border border-white text-white text-lg rounded-lg focus:ring-blue-500 block w-full p-2.5"
-  >
-    @for (formatOption of formatOptions(); track formatOption) {
-    <option class="text-white" [ngValue]="formatOption">{{ formatOption.name | uppercase }}</option>
-    }
-  </select>
+<div class="shadow-xl shadow-white/20">
+  <button class="text-black text-md border-[1px] bg-white px-4 py-2 rounded-l-md">Convert All
+    ({{ vm().totalFilesCount }})
+  </button>
+  <button [cdkMenuTriggerFor]="menu"
+          class="text-black text-md font-bold border-[1px] bg-white px-4 py-2 rounded-r-md">{{ vm().currentTarget.name | uppercase }}
+  </button>
+
+  <ng-template #menu>
+    <div cdkMenu class="grid grid-cols-3 bg-white p-2 gap-1">
+      @for (format of vm().allowedFormats; track format.id) {
+        <div cdkMenuItem (click)="setTarget(format)"
+             class="px-2 py-2 w-18 h-16 bg-white border-[1px] border-black/10 flex justify-center items-center cursor-pointer hover:outline-2 hover:outline-black hover:outline"
+             [ngClass]="{'bg-black/10': format.id === vm().currentTarget.id}">
+          {{ format.name | uppercase }}
+        </div>
+      }
+    </div>
+  </ng-template>
 </div>

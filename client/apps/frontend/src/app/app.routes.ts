@@ -4,7 +4,7 @@ import { GlobalRoutePaths } from './core/types/global-paths';
 export const appRoutes: Route[] = [
   {
     path: GlobalRoutePaths.converter,
-    loadChildren: () => import('./feature/converter/converter.routes').then((r) => r.routes),
+    loadComponent: () => import('./feature/converter/converter.component').then((r) => r.ConverterComponent),
   },
   {
     path: '',

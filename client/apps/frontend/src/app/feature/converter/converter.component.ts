@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { extractFileFormat } from '@frontend/src/app/core/utils/file';
 import { ConverterSelectTargetComponent } from '@frontend/src/app/feature/converter/components/converter-select-target/converter-select-target.component';
-import { ConverterApiService } from '@frontend/src/app/feature/converter/converter-api.service';
 import { ConverterStore } from '@frontend/src/app/feature/converter/converter.store';
+import { ConverterApiService } from '@frontend/src/app/feature/converter/services/converter-api.service';
 import { generateUuid } from '@libs/utils/guid';
-import { ConverterFileListComponent } from '../components/converter-file-list/converter-file-list.component';
-import { ConverterService } from '../converter.service';
-import { ConvertableFile } from '../converter.types';
+import { ConverterFileListComponent } from './components/converter-file-list/converter-file-list.component';
+import { ConvertableFile } from './converter.types';
+import { ConverterService } from './services/converter.service';
 
 @Component({
   selector: 'app-converter',
