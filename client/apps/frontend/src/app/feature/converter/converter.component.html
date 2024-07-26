@@ -23,16 +23,11 @@
       </label>
     </div>
 
-    <div class="w-full flex flex-row justify-center mt-6">
-      <div class="flex flex-row justify-center w-96">
-        @if (vm().convertableFiles.length) {
-          <app-converter-select-target />
-        }
-      </div>
-    </div>
-
     @if (vm().convertableFiles.length) {
       <div class="mt-8 w-[720px]">
+        <div class="my-6">
+          <app-converter-select-target />
+        </div>
         <app-converter-file-list (removeItem)="onRemoveItem($event)" [files]="vm().convertableFiles" />
       </div>
     }

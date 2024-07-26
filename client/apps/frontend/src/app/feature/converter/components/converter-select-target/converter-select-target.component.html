@@ -1,13 +1,19 @@
-<div class="shadow-xl shadow-white/20">
-  <button class="text-black text-md border-[1px] bg-white px-4 py-2 rounded-l-md">Convert All
-    ({{ vm().totalFilesCount }})
-  </button>
-  <button [cdkMenuTriggerFor]="menu"
-          class="text-black text-md font-bold border-[1px] bg-white px-4 py-2 rounded-r-md">{{ vm().currentTarget.name | uppercase }}
+<div class="flex flex-row justify-between">
+  <div>
+    <span class="text-white mr-4">Convert all({{ vm().totalFilesCount }}) to:</span>
+    <button [cdkMenuTriggerFor]="menu"
+            class="text-white text-md font-bold border-[1px] bg-transparent px-4 py-2 rounded-md">{{ vm().currentTarget ? (vm().currentTarget.name | uppercase) : 'Select target' }}
+    </button>
+    <ng-template #menu>
+      <app-converter-select-target-search (setTarget)="setTarget($event)" [current]="vm().currentTarget"
+                                          [formats]="vm().allowedFormats" />
+    </ng-template>
+  </div>
+  <button
+    class="shadow-xl shadow-white/20 text-black text-md font-bold border-[1px] bg-white px-4 py-2 rounded-md flex items-center gap-2">
+    Convert
+    <i class="ph-bold ph-arrow-right text-xl"></i>
   </button>
 
-  <ng-template #menu>
-    <app-converter-select-target-search (setTarget)="setTarget($event)" [current]="vm().currentTarget"
-                                        [formats]="vm().allowedFormats" />
-  </ng-template>
+
 </div>
