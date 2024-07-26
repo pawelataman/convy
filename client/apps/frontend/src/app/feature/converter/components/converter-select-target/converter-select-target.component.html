@@ -7,22 +7,7 @@
   </button>
 
   <ng-template #menu>
-    <div (closed)="searchFormat.set('')" cdkMenu class="p-4 bg-black">
-      <div class="flex flex-row items-center justify-start h-18 gap-4 p-2 border-[1px] border-white rounded-md mb-2">
-        <i class="ph-bold ph-magnifying-glass text-white"></i>
-        <input [(ngModel)]="searchFormat" class="w-full h-full bg-transparent text-white border-none outline-none"
-               placeholder="Search"
-               type="text">
-      </div>
-      <div class="grid grid-cols-3 gap-1">
-        @for (format of vm().allowedFormats; track format.id) {
-          <div cdkMenuItem (click)="setTarget(format)"
-               class="text-md px-2 py-2 text-black border-[1px] border-white flex justify-center items-center rounded-md cursor-pointer hover:outline-2 hover:outline-black hover:outline"
-               [ngClass]="{'bg-white': format.id === vm().currentTarget.id, 'text-white':format.id !== vm().currentTarget.id}">
-            {{ format.name | uppercase }}
-          </div>
-        }
-      </div>
-    </div>
+    <app-converter-select-target-search (setTarget)="setTarget($event)" [current]="vm().currentTarget"
+                                        [formats]="vm().allowedFormats" />
   </ng-template>
 </div>
