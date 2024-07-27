@@ -5,6 +5,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpCode,
   HttpStatus,
   Param,
@@ -22,7 +23,7 @@ import { ConverterService } from './services/converter.service';
 @Controller('converter')
 export class ConverterController implements IConverterGateway {
   constructor(private readonly converterService: ConverterService) {}
-  
+
   @Post('convert')
   @UseInterceptors(FileInterceptor('file'))
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -41,6 +42,7 @@ export class ConverterController implements IConverterGateway {
   }
 
   @Get('conversion/:conversionId')
+  @Header('access-control-expose-headers', 'Content-Disposition')
   async getConvertedImage(@Param('conversionId') conversionId: string): Promise<StreamableFile> {
     return this.converterService.getConvertedImage(conversionId);
   }

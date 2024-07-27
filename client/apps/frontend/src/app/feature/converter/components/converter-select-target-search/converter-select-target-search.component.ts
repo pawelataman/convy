@@ -13,7 +13,7 @@ import { ApiFileType } from '@libs/api/types/api-file-type';
 })
 export class ConverterSelectTargetSearchComponent {
   formats = input.required<ApiFileType[]>();
-  current = input.required<ApiFileType>();
+  current = input.required<ApiFileType | null>();
   searchFormat = model<string>('');
   setTarget = output<ApiFileType>();
   filteredFormats = computed(() => {

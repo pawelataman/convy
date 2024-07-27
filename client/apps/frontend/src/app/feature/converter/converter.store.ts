@@ -5,7 +5,7 @@ import { ApiFileType } from '@libs/api/types/api-file-type';
 import { patchState, signalState } from '@ngrx/signals';
 
 type ConverterState = {
-  targetFormat: ApiFileType;
+  targetFormat: ApiFileType | null;
   files: ConvertableFile[];
 };
 
@@ -22,7 +22,7 @@ export class ConverterStore {
 
   constructor(private readonly _configService: ConfigService) {}
 
-  setTargetFormat(format: ApiFileType): void {
+  setTargetFormat(format: ApiFileType | null): void {
     patchState(this._state, (state) => ({ ...state, targetFormat: format }));
   }
 

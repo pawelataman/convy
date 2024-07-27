@@ -9,7 +9,7 @@
     @for (format of filteredFormats(); track format.id) {
       <div (click)="setFormatTarget(format)"
            class="text-md px-2 py-2 text-black border-[1px] border-white flex justify-center items-center rounded-md cursor-pointer hover:outline-2 hover:outline-black hover:outline"
-           [ngClass]="{'bg-white': format.id === current().id, 'text-white':format.id !== current().id}">
+           [ngClass]="{'bg-white': format.id === current()?.id, 'text-white':format.id !== current()?.id}">
         {{ format.name | uppercase }}
       </div>
     }

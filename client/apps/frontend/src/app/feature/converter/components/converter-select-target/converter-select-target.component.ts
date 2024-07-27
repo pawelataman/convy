@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfigService } from '@frontend/src/app/core/services/config.service';
 import { ConverterSelectTargetSearchComponent } from '@frontend/src/app/feature/converter/components/converter-select-target-search/converter-select-target-search.component';
 import { ConverterStore } from '@frontend/src/app/feature/converter/converter.store';
+import { ConverterService } from '@frontend/src/app/feature/converter/services/converter.service';
 import { ApiFileType } from '@libs/api/types/api-file-type';
 
 @Component({
@@ -22,10 +23,18 @@ export class ConverterSelectTargetComponent {
     totalFilesCount: this._converterStore.files().length,
   }));
 
-  constructor(private readonly _configService: ConfigService, private readonly _converterStore: ConverterStore) {}
+  constructor(
+    private readonly _configService: ConfigService,
+    private readonly _converterStore: ConverterStore,
+    private readonly _converterService: ConverterService
+  ) {}
 
   setTarget(format: ApiFileType): void {
     this._converterStore.setTargetFormat(format);
     this.menuTrigger()?.close();
+  }
+
+  convert() {
+    this._converterService.events$.convertEvent.next();
   }
 }
