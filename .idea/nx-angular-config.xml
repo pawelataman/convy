@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="NxAngularConfigService" workspaceLocation="file://$PROJECT_DIR$/client/nx.json">
-    <projects>
-      <project name="backend" file="file://$PROJECT_DIR$/client/apps/backend/project.json" />
-      <project name="frontend" file="file://$PROJECT_DIR$/client/apps/frontend/project.json" />
-    </projects>
-  </component>
-</project>

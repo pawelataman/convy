@@ -7,8 +7,10 @@ tmp
 
 # dependencies
 node_modules
-
+converter/bin/
+converter/example-images/
 # IDEs and editors
+.idea
 /.idea
 .project
 .classpath
@@ -41,3 +43,7 @@ Thumbs.db
 
 .nx/cache
 .angular
+
+example-images
+minio
+.env

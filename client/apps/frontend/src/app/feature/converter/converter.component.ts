@@ -1,79 +1,60 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { take } from 'rxjs';
-import { ConfigService } from '../../core/services/config.service';
-import { FileService } from '../../core/services/file.service';
-import { PlatformService } from '../../core/services/platform.service';
-import { extractFileFormat } from '../../core/utils/file';
-import { generateUUid } from '../../core/utils/uuid';
+import { ConfigService } from '@frontend/src/app/core/services/config.service';
+import { extractFileFormat } from '@frontend/src/app/core/utils/file';
+import { ConverterSelectTargetComponent } from '@frontend/src/app/feature/converter/components/converter-select-target/converter-select-target.component';
+import { ConverterStore } from '@frontend/src/app/feature/converter/converter.store';
+import { ConverterApiService } from '@frontend/src/app/feature/converter/services/converter-api.service';
+import { generateUuid } from '@libs/utils/guid';
+import { ConverterFileListComponent } from './components/converter-file-list/converter-file-list.component';
 import { ConvertableFile } from './converter.types';
-import { FileListComponent } from './file-list/file-list.component';
+import { ConverterService } from './services/converter.service';
 
 @Component({
   selector: 'app-converter',
   standalone: true,
-  imports: [CommonModule, FormsModule, FileListComponent],
+  providers: [ConverterService, ConverterApiService, ConverterStore],
+  imports: [CommonModule, FormsModule, ConverterFileListComponent, ConverterSelectTargetComponent],
   templateUrl: './converter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConverterComponent implements OnInit {
-  convertableFiles = signal<ConvertableFile[]>([]);
   acceptedFormats = signal<string>('');
+  vm = computed(() => ({
+    convertableFiles: this._converterStore.files(),
+    targetFormat: this._converterStore.targetFormat(),
+  }));
 
-  constructor(
-    private readonly _configService: ConfigService,
-    private readonly _fileService: FileService,
-    private readonly _platformService: PlatformService
-  ) {
-    //  effect(() => console.log(this.convertableFiles()));
-  }
+  constructor(private readonly _configService: ConfigService, private readonly _converterStore: ConverterStore) {}
 
   onFileChange($event: Event): void {
     const input: HTMLInputElement = $event.target as HTMLInputElement;
     const files: FileList | null = input.files;
 
     if (files) {
-      this.convertableFiles.set([
-        ...this.convertableFiles(),
-        ...Array.from(files).map(this._createNewConvertableFile.bind(this)),
-      ]);
+      this._converterStore.setConverterFiles(Array.from(files).map(this._createNewConvertableFile.bind(this)));
     }
   }
 
   onRemoveItem(id: string): void {
-    const afterRemoved = this.convertableFiles().filter((file) => file.id !== id);
-    this.convertableFiles.set(afterRemoved);
+    this._converterStore.deleteFileById(id);
   }
 
   ngOnInit(): void {
     this._constructAcceptedFormatString();
-    // this._fetchImagesFromAssets();
   }
 
   private _constructAcceptedFormatString(): void {
-    const acceptedFormats = this._configService.supportedSourceFileFormats;
+    const supportedFileTypes = this._configService.supportedFileTypes;
 
-    const acceptedFormatsStr = acceptedFormats.map((format) => `image/${format}`).join(',');
+    const acceptedFormatsStr = supportedFileTypes.map((supportedFileType) => `image/${supportedFileType.name}`).join(',');
     this.acceptedFormats.set(acceptedFormatsStr);
-  }
-
-  private _fetchImagesFromAssets(): void {
-    if (this._platformService.isServer()) {
-      return;
-    }
-    this._fileService
-      .getFilesFromAssets()
-      .pipe(take(1))
-      .subscribe((files: File[]) => {
-        this.convertableFiles.set(files.map((file) => this._createNewConvertableFile(file)));
-      });
   }
 
   private _createNewConvertableFile(file: File): ConvertableFile {
     return {
       file,
-      id: generateUUid(),
+      id: generateUuid(),
       format: extractFileFormat(file),
     };
   }

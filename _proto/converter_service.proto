@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package converter;
+
+option go_package = "converter/pb"; 
+
+import "converter_messages.proto";
+
+service ConverterService {
+    rpc Upload(stream FileUploadRequest) returns(stream FileUploadResponse);
+}
+  

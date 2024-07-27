@@ -4,3 +4,8 @@ export interface ConvertableFile {
   format: string;
   targetFormat?: string;
 }
+
+export interface ConvertedFile {
+  name: string;
+  file: Blob;
+}

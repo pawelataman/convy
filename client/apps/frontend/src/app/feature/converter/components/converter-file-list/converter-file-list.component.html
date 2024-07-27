@@ -1,0 +1,7 @@
+<div>
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
+    @for (file of files(); track $index) {
+    <app-converter-file-list-item [file]="file" (removeItem)="removeItem.emit($event)"></app-converter-file-list-item>
+    }
+  </div>
+</div>

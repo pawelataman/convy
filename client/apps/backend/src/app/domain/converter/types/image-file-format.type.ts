@@ -1,0 +1,18 @@
+export type ImageFileFormat =
+  | 'jpg'
+  | 'jpeg'
+  | 'jp2'
+  | 'jxl'
+  | 'png'
+  | 'gif'
+  | 'avif'
+  | 'tiff'
+  | 'tif'
+  | 'fits'
+  | 'heif'
+  | 'pdf'
+  | 'ppm'
+  | 'raw'
+  | 'svg'
+  | 'webp'
+  | 'bmp';

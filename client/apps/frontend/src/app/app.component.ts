@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
-import { ConfigService } from './core/services/config.service';
-import { PlatformService } from './core/services/platform.service';
+import { FlowbiteService } from './core/services/flowbite.service';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
 @Component({
@@ -12,14 +10,9 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  private platformService = inject(PlatformService);
-  private configService = inject(ConfigService);
+  private flowBiteService = inject(FlowbiteService);
 
   ngOnInit(): void {
-    if (this.platformService.isBrowser()) {
-      initFlowbite();
-    }
-
-    console.log(this.configService.supportedSourceFileFormats);
+    this.flowBiteService.loadFlowbite((_) => {});
   }
 }
