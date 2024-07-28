@@ -16,7 +16,7 @@ export class ConverterApiService extends BaseApiService implements IConverterGat
 
   getConvertedImage(conversionId: string): Observable<ConvertedFile> {
     return this._http
-      .get(`${this._url}/conversion/${conversionId}`, {
+      .get(`${this._url}/conversions/${conversionId}`, {
         observe: 'response',
         responseType: 'blob',
       })
