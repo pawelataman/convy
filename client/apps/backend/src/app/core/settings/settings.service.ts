@@ -1,7 +1,7 @@
 import { SettingsRepository } from '@backend/src/app/core/settings/settings.repository';
 import { FileTypeModel } from '@backend/src/app/core/settings/settings.types';
 import { ApiGetSettingsResponse } from '@libs/api/types/api-get-settings-response';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 @Injectable()
 export class SettingsService {
@@ -13,8 +13,18 @@ export class SettingsService {
 
   async getSettings(): Promise<ApiGetSettingsResponse> {
     const [supportedFormats] = await Promise.all([this._settingsRepository.getSupportedFormats()]);
+    const fileTypesConvertableTo = {};
+
+    try {
+      for await (const supportedFormat of supportedFormats) {
+        fileTypesConvertableTo[supportedFormat.id] = await this._settingsRepository.getFormatsForFileType(supportedFormat.id);
+      }
+    } catch (e) {
+      throw new InternalServerErrorException();
+    }
     return {
       supportedFileTypes: supportedFormats,
+      fileTypesConvertableTo,
     };
   }
 

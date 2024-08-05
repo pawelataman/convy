@@ -27,8 +27,10 @@ export class SettingsRepository {
       .select({
         id: fileType.id,
         name: fileType.name,
+        mediaType: mediaType,
       })
       .from(fileType)
+      .leftJoin(mediaType, eq(fileType.media_type_id, mediaType.id))
       .where(eq(fileType.is_supported, true));
   }
 

@@ -9,6 +9,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseArrayPipe,
   Post,
   StreamableFile,
   UploadedFile,
@@ -29,21 +30,25 @@ export class ConverterController implements IConverterGateway {
   @UsePipes(new ValidationPipe({ transform: true }))
   @HttpCode(HttpStatus.CREATED)
   async convert(@UploadedFile() file: Express.Multer.File, @Body() metadata: ApiConversionRequestMetadata): Promise<ApiConversionResponseMetadata> {
-    const convertedFilePath = await this.converterService.convert({
+    return this.converterService.convert({
       fileName: file.originalname,
       buffer: file.buffer,
       targetFormatId: metadata.targetFormatId,
       requestId: metadata.requestId,
     });
-
-    return {
-      conversionId: convertedFilePath,
-    };
   }
 
   @Get('conversion/:conversionId')
   @Header('access-control-expose-headers', 'Content-Disposition')
+  @HttpCode(200)
   async getConvertedImage(@Param('conversionId') conversionId: string): Promise<StreamableFile> {
     return this.converterService.getConvertedImage(conversionId);
+  }
+
+  @Post('conversion')
+  @Header('access-control-expose-headers', 'Content-Disposition')
+  @HttpCode(200)
+  async getConvertedImages(@Body(new ParseArrayPipe({ items: String })) conversionIds: string[]): Promise<StreamableFile> {
+    return this.converterService.getConvertedImagesAsArchive(conversionIds);
   }
 }
