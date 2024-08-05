@@ -10,6 +10,7 @@ export function initializeAppConfig(apiService: SettingsApiService, configServic
       tap((config: ApiGetSettingsResponse) => {
         configService.appConfig = {
           supportedFileTypes: config.supportedFileTypes,
+          fileTypesConvertableTo: config.fileTypesConvertableTo,
         };
       })
     );

@@ -12,12 +12,16 @@ import { ApiFileType } from '@libs/api/types/api-file-type';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConverterSelectTargetSearchComponent {
-  formats = input.required<ApiFileType[]>();
+  formats = input.required<ApiFileType[] | null>();
   current = input.required<ApiFileType | null>();
   searchFormat = model<string>('');
   setTarget = output<ApiFileType>();
   filteredFormats = computed(() => {
-    return this.formats().filter((format: ApiFileType) => format.name.toLowerCase().includes(this.searchFormat().toLowerCase()));
+    const formats = this.formats();
+    if (formats) {
+      return formats.filter((format: ApiFileType) => format.name.toLowerCase().includes(this.searchFormat().toLowerCase()));
+    }
+    return [];
   });
 
   setFormatTarget(target: ApiFileType): void {

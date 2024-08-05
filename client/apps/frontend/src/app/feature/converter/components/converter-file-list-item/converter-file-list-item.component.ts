@@ -34,19 +34,28 @@ import { ConverterSelectTargetComponent } from '../converter-select-target/conve
 export class ConverterFileListItemComponent implements OnInit {
   menuTrigger = viewChild<CdkMenuTrigger>(CdkMenuTrigger);
   file = input.required<ConvertableFile>();
+  removeItem = output<string>();
+  private result = computed(() => {
+    if (this._fileListItemStore.targetFormat()) {
+      return this._fileListItemStore.conversionResult()[this._fileListItemStore.targetFormat()!.id];
+    }
+    return null;
+  });
+
+  private allowedFormats = computed(() => {
+    const targetFormat = this._fileListItemStore.targetFormat();
+    if (targetFormat) {
+      return this._configService.fileTypesConvertableTo[targetFormat.id];
+    }
+    return null;
+  });
   vm = computed(() => ({
     file: this.file(),
     targetFormat: this._fileListItemStore.targetFormat(),
-    allowedFormats: this._configService.supportedFileTypes,
+    allowedFormats: this.allowedFormats(),
     isIndeterminate: this._fileListItemStore.isIndeterminate(),
-    result: computed(() => {
-      if (this._fileListItemStore.targetFormat()) {
-        return this._fileListItemStore.conversionResult()[this._fileListItemStore.targetFormat()!.id];
-      }
-      return null;
-    })(),
+    result: this.result(),
   }));
-  removeItem = output<string>();
 
   constructor(
     private readonly _fileListItemService: FileListItemService,

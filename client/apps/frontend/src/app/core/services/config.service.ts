@@ -8,6 +8,7 @@ import { AppConfig } from '../types/app-config';
 export class ConfigService {
   private _appConfig: AppConfig = {
     supportedFileTypes: [],
+    fileTypesConvertableTo: {},
   };
 
   set appConfig(appConfig: AppConfig) {
@@ -16,5 +17,9 @@ export class ConfigService {
 
   get supportedFileTypes(): ApiFileType[] {
     return this._appConfig.supportedFileTypes;
+  }
+
+  get fileTypesConvertableTo(): { [id: number]: ApiFileType[] } {
+    return this._appConfig.fileTypesConvertableTo;
   }
 }
