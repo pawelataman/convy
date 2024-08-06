@@ -19,6 +19,7 @@ fileConvertableToMap.set(8, jpg);
 fileConvertableToMap.set(11, svg);
 fileConvertableToMap.set(12, tiff);
 fileConvertableToMap.set(13, webp);
+fileConvertableToMap.set(14, tiff);
 
 const fileConvertableToArr = [];
 

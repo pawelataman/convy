@@ -44,4 +44,9 @@ export const fileTypesData = [
     name: 'webp',
     id: 13,
   },
+  {
+    media_type_id: 10,
+    name: 'tif',
+    id: 14,
+  },
 ];

@@ -47,7 +47,7 @@ export class ConverterComponent implements OnInit {
   private _constructAcceptedFormatString(): void {
     const supportedFileTypes = this._configService.supportedFileTypes;
 
-    const acceptedFormatsStr = supportedFileTypes.map((supportedFileType) => `image/${supportedFileType.name}`).join(',');
+    const acceptedFormatsStr = supportedFileTypes.map((supportedFileType) => `.${supportedFileType.name}`).join(',');
     this.acceptedFormats.set(acceptedFormatsStr);
   }
 
