@@ -46,11 +46,6 @@ export const fileTypesData = [
   },
   {
     media_type_id: 9,
-    name: 'svg+xml',
-    id: 10,
-  },
-  {
-    media_type_id: 9,
     name: 'svg',
     id: 11,
   },

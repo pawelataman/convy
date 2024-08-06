@@ -1,30 +1,21 @@
 import { fileType, fileTypeConvertableTo, mediaType } from '@backend/src/app/common/database/schemas';
+import { fileConvertableTo } from '@backend/src/app/common/database/seed/file-convertable-to';
+import { fileTypesData } from '@backend/src/app/common/database/seed/file-types';
+import { mediaTypesData } from '@backend/src/app/common/database/seed/media-types';
 import { createDbUrl } from '@backend/src/app/common/utils/db';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { fileConvertableTo } from './file-convertable-to';
-import { fileTypesData } from './file-types';
-import { mediaTypesData } from './media-types';
 
 const migrationClient = postgres(createDbUrl(), { max: 1 });
 const db = drizzle(migrationClient);
 
-async function seedMediaTypes() {
-  await db.insert(mediaType).values(mediaTypesData);
-}
-
-async function seedFileTypes() {
-  await db.insert(fileType).values(fileTypesData);
-}
-
-async function seedConvertableToFileTypes() {
-  await db.insert(fileTypeConvertableTo).values(fileConvertableTo);
-}
-
 async function runSeed() {
-  await seedMediaTypes();
-  await seedFileTypes();
-  await seedConvertableToFileTypes();
+  await db.transaction(async (tx) => {
+    await tx.insert(mediaType).values(mediaTypesData);
+    await tx.insert(fileType).values(fileTypesData);
+    await tx.insert(fileTypeConvertableTo).values(fileConvertableTo);
+  });
+
   await migrationClient.end();
 }
 

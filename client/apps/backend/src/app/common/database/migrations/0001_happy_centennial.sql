@@ -1,1 +1,0 @@
-ALTER TABLE "storage_info" ADD COLUMN "filename" varchar NOT NULL;

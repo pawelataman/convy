@@ -3,7 +3,7 @@ import { integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import fileType from './file-type.schema';
 
 const storageInfo = pgTable('storage_info', {
-  id: uuid('id').defaultRandom().notNull(),
+  id: uuid('id').defaultRandom().primaryKey().notNull(),
   path: varchar('storage_path').notNull(),
   fileName: varchar('filename').notNull(),
   requestId: varchar('request_id').notNull(),

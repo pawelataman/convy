@@ -15,4 +15,5 @@ export type ImageFileFormat =
   | 'raw'
   | 'svg'
   | 'webp'
-  | 'bmp';
+  | 'bmp'
+  | 'svg+xml';

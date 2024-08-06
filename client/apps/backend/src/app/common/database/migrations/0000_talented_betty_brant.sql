@@ -17,8 +17,9 @@ CREATE TABLE IF NOT EXISTS "media_type" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "storage_info" (
-	"id" uuid DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"storage_path" varchar NOT NULL,
+	"filename" varchar NOT NULL,
 	"request_id" varchar NOT NULL,
 	"file_type_id" integer,
 	"created_at" timestamp DEFAULT now() NOT NULL

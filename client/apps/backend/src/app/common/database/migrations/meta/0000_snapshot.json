@@ -1,5 +1,5 @@
 {
-  "id": "0ff01dc6-f5f2-4d7f-9915-27cc48009cc5",
+  "id": "0d56699e-e229-417d-8ae6-7e945a508606",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -139,12 +139,18 @@
         "id": {
           "name": "id",
           "type": "uuid",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
         "storage_path": {
           "name": "storage_path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "filename": {
+          "name": "filename",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
