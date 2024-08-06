@@ -20,16 +20,6 @@ export const fileTypesData = [
     id: 4,
   },
   {
-    media_type_id: 5,
-    name: 'heif',
-    id: 5,
-  },
-  {
-    media_type_id: 6,
-    name: 'jp2',
-    id: 6,
-  },
-  {
     media_type_id: 7,
     name: 'jpeg',
     id: 7,
@@ -38,11 +28,6 @@ export const fileTypesData = [
     media_type_id: 7,
     name: 'jpg',
     id: 8,
-  },
-  {
-    media_type_id: 8,
-    name: 'jxl',
-    id: 9,
   },
   {
     media_type_id: 9,

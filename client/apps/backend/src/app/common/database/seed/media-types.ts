@@ -16,20 +16,8 @@ export const mediaTypesData = [
     name: 'image/gif',
   },
   {
-    id: 5,
-    name: 'image/heif',
-  },
-  {
-    id: 6,
-    name: 'image/jp2',
-  },
-  {
     id: 7,
     name: 'image/jpeg',
-  },
-  {
-    id: 8,
-    name: 'image/jxl',
   },
   {
     id: 9,
