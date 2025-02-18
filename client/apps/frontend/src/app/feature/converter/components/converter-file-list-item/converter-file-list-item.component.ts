@@ -45,7 +45,7 @@ export class ConverterFileListItemComponent implements OnInit {
   private allowedFormats = computed(() => {
     const targetFormat = this._fileListItemStore.targetFormat();
     if (targetFormat) {
-      return this._configService.fileTypesConvertableTo[targetFormat.id];
+      return this._configService.supportedFileTypes;
     }
     return null;
   });

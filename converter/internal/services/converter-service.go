@@ -34,7 +34,7 @@ func (cs *ConverterService) Convert(stream pb.ConverterService_UploadServer) (*b
 		return nil, "", err
 	}
 
-	fileName, sourceFormat, targetFormat, chunk := st.FileName, st.SourceFormat, st.TargetFormat, st.Chunk
+	fileName, sourceFormat, targetFormat, chunk := st.FileName, st.SourceFormat, st.TargetFormat,
 
 	imageBuffer.Write(chunk)
 	for {

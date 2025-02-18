@@ -10,6 +10,7 @@
     "db:generate": "npx drizzle-kit generate --config ./apps/backend/drizzle.config.ts",
     "db:migrate": "tsx --tsconfig ./tsconfig.base.json ./apps/backend/src/app/common/database/migrate.ts",
     "db:seed": "tsx --tsconfig ./tsconfig.base.json ./apps/backend/src/app/common/database/seed/seed.ts",
+    "db:unseed": "tsx --tsconfig ./tsconfig.base.json ./apps/backend/src/app/common/database/seed/truncate.ts",
     "db:studio": "npx drizzle-kit studio --config ./apps/backend/drizzle.config.ts"
   },
   "private": true,
@@ -50,6 +51,7 @@
     "minio": "^8.0.1",
     "multer": "^1.4.5-lts.1",
     "postgres": "^3.4.4",
+    "potrace": "^2.1.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "sharp": "^0.33.4",
@@ -90,6 +92,7 @@
     "@types/jest": "^29.4.0",
     "@types/multer": "^1.4.11",
     "@types/node": "~18.16.9",
+    "@types/potrace": "^2.1.5",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "7.17.0",
     "@typescript-eslint/parser": "7.17.0",

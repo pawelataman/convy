@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, InternalServerErrorException, Unproces
 import sharp from 'sharp';
 
 import { wrapInPromise } from '@backend/src/app/common/utils/promise';
+import * as potrace from 'potrace';
+import { Potrace } from 'potrace';
 import { ImageFileFormat } from '../types/image-file-format.type';
 
 @Injectable()
@@ -13,7 +15,7 @@ export class SharpConverterService {
   }
 
   async convert(sourceBuffer: Buffer, targetFormat: string): Promise<Buffer> {
-    let sharpFileInstance = sharp(sourceBuffer);
+    const sharpFileInstance = sharp(sourceBuffer);
 
     if (!(await this._checkImageValid(sharpFileInstance))) {
       throw new UnprocessableEntityException('Unprocessable or corrupted image');
@@ -25,68 +27,62 @@ export class SharpConverterService {
     }
 
     try {
-      sharpFileInstance = await converterFunction(sharpFileInstance);
-      return this._toBuffer(sharpFileInstance);
+      return converterFunction(sharpFileInstance);
     } catch (e) {
       throw new InternalServerErrorException('Error while formating image');
     }
   }
 
-  private _toJpg(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toJpg(sharpInstance: sharp.Sharp): Promise<Buffer> {
     return wrapInPromise<sharp.Sharp>(() => sharpInstance.jpeg());
   }
 
-  private _toPng(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance.png());
+  private _toPng(sharpInstance: sharp.Sharp): Promise<Buffer> {
+    return wrapInPromise<sharp.Sharp>(() => sharpInstance.png().toBuffer());
   }
 
-  private _toBmp(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toBmp(sharpInstance: sharp.Sharp): Promise<Buffer> {
     // TODO: separate implement BMP conversion  https://github.com/lovell/sharp/issues/806
     return wrapInPromise<sharp.Sharp>(() => sharpInstance);
   }
 
-  private _toSvg(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    // TODO: check if can convert to SVG
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance);
+  private async _toSvg(sharpInstance: sharp.Sharp): Promise<Buffer> {
+    const pngBuffer = await this._toPng(sharpInstance);
+    return new Promise<sharp.Sharp>((resolve, reject) => {
+      potrace.trace(pngBuffer, async (error: Error | null, svg: string, potrace: Potrace) => {
+        if (error) {
+          reject(error);
+        }
+        const sharpInstance = sharp(svg);
+
+        const isValid = await this._checkImageValid(sharpInstance);
+        console.log(isValid);
+        if (isValid) {
+          resolve(sharpInstance);
+        } else {
+          reject('Invalid file');
+        }
+      });
+    });
   }
 
-  private _toAvif(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toAvif(sharpInstance: sharp.Sharp): Promise<Buffer> {
     return wrapInPromise<sharp.Sharp>(() => sharpInstance.avif());
   }
 
-  private _toTiff(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toTiff(sharpInstance: sharp.Sharp): Promise<Buffer> {
     return wrapInPromise<sharp.Sharp>(() => sharpInstance.tiff());
   }
 
-  private _toHeif(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance); // TODO: implement
-  }
-
-  private _toGif(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toGif(sharpInstance: sharp.Sharp): Promise<Buffer> {
     return wrapInPromise<sharp.Sharp>(() => sharpInstance.gif());
   }
 
-  private _toWebp(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
+  private _toWebp(sharpInstance: sharp.Sharp): Promise<Buffer> {
     return wrapInPromise<sharp.Sharp>(() => sharpInstance.webp());
   }
 
-  private _toJp2(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance); // TODO: implement
-  }
-
-  private _toFits(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance); // TODO: implement
-  }
-
-  private _toJxl(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance); // TODO: implement
-  }
-
-  private _toRaw(sharpInstance: sharp.Sharp): Promise<sharp.Sharp> {
-    return wrapInPromise<sharp.Sharp>(() => sharpInstance); // TODO: implement
-  }
-
-  private _createConverterFnMap(): Map<ImageFileFormat, (sharpInstance: sharp.Sharp) => Promise<sharp.Sharp>> {
+  private _createConverterFnMap(): Map<ImageFileFormat, (sharpInstance: sharp.Sharp) => Promise<Buffer>> {
     return new Map([
       ['jpeg', this._toJpg.bind(this)],
       ['jpg', this._toJpg.bind(this)],
@@ -96,6 +92,7 @@ export class SharpConverterService {
       ['tiff', this._toTiff.bind(this)],
       ['tif', this._toTiff.bind(this)],
       ['gif', this._toGif.bind(this)],
+      ['svg', this._toSvg.bind(this)],
     ]);
   }
 
